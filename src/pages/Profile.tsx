@@ -11,7 +11,11 @@ import { UserType } from 'models/auth'
 // }
 
 const Profile: FC = () => {
-  return <Layout></Layout>
+  return (
+    <Layout>
+      <div>Profile</div>
+    </Layout>
+  )
 }
 
 export default Profile
