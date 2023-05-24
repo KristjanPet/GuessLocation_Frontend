@@ -73,7 +73,105 @@ const Navbar: FC = () => {
               <NavbarMenuForm />
             </>
           ) : (
-            <div>neki</div>
+            <>
+              <Link className="flex justify-center pl-2 " to={routes.HOME}>
+                <img
+                  src="/images/NavbarLogo.svg"
+                  alt="GeoTagger"
+                  width={130}
+                  height={25}
+                />
+              </Link>
+
+              <div className="" id="navbarTogglerDemo02">
+                <ul className="flex flex-row items-center gap-4 ">
+                  {authStore.user ? (
+                    // <>
+                    //   <li className="nav-item">
+                    //     <NavLink to={routes.HOME} className={navbarClass}>
+                    //       Home
+                    //     </NavLink>
+                    //   </li>
+                    //   <li className="nav-item ">
+                    //     <SettingsForm navbarClass={navbarClass} />
+                    //   </li>
+                    //   <li className="nav-item ">
+                    //     <button
+                    //       onClick={signout}
+                    //       // className="navbar-text logout-button"
+                    //       className={`${navbarClass} logout-button`}
+                    //     >
+                    //       Logout
+                    //     </button>
+                    //   </li>
+                    //   <li className="nav-item ">
+                    //     <Link
+                    //       className={`${opacity} text-decoration-none text-light`}
+                    //       // to={`${routes.PROFILE}/users/edit`}
+                    //       to={`${routes.PROFILE}/${authStore.user.id}`}
+                    //       state={{
+                    //         id: authStore.user?.id,
+                    //         first_name: authStore.user?.first_name,
+                    //         last_name: authStore.user?.last_name,
+                    //         email: authStore.user?.email,
+                    //         avatar: authStore.user?.avatar,
+                    //         isActiveUser: true,
+                    //       }}
+                    //     >
+                    //       <Avatar
+                    //         className="navbar-avatar"
+                    //         round
+                    //         src={
+                    //           authStore.user?.avatar
+                    //             ? `${process.env.REACT_APP_API_URL}/files/${authStore.user?.avatar}`
+                    //             : '/images/blankAvatarIcon.svg'
+                    //         }
+                    //         alt={
+                    //           authStore.user?.first_name ||
+                    //           authStore.user?.last_name
+                    //             ? `${authStore.user?.first_name} ${authStore.user?.last_name}`
+                    //             : authStore.user?.email
+                    //         }
+                    //       />
+                    //     </Link>
+                    //   </li>
+                    //   <li className="nav-item">
+                    //     <CreateQuoteForm opacity={opacity} />
+                    //   </li>
+                    // </>
+                    <div>neki</div>
+                  ) : (
+                    <>
+                      {!isSignupPage && (
+                        <li className="">
+                          <NavLink
+                            to={routes.LOGIN}
+                            // className={'text-decoration-none'}
+                          >
+                            <button className=" text-dark font-medium">
+                              Sign in
+                            </button>
+                          </NavLink>
+                        </li>
+                      )}
+                      <li>or</li>
+                      {!isLoginPage && (
+                        <li className="">
+                          <NavLink
+                            to={routes.SIGNUP}
+                            // className={'text-decoration-none'}
+                          >
+                            <button className=" bg-primary rounded text-white px-10 py-0.5">
+                              Sign up
+                            </button>
+                          </NavLink>
+                        </li>
+                      )}
+                    </>
+                  )}
+                </ul>
+              </div>
+            </>
           )}
         </nav>
       </header>
