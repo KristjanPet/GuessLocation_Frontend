@@ -6,7 +6,7 @@ const Home: FC = () => {
     <Layout>
       <div className="p-2 mb-4">
         <div className="container-fluid py-4">
-          <h1 className="display-5 fw-bold">Welcome</h1>
+          <h1 className=" font-bold text-5xl">Welcome</h1>
           <p className="col-md-8 fs-4">
             In this tutorial you will learn how to use:
           </p>

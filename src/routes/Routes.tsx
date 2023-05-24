@@ -18,15 +18,59 @@ type AppRoute = RouteProps & {
 const Home = lazy(() => import('pages/Home'))
 
 /* Private routes */
+const Profile = lazy(() => import('pages/Profile'))
+const Dashboard = lazy(() => import('pages/Dashboard'))
+const DashboardLocation = lazy(() => import('pages/Dashboard/Location'))
+const DashboardLocationAdd = lazy(() => import('pages/Dashboard/Location/Add'))
+const DashboardLocationEdit = lazy(
+  () => import('pages/Dashboard/Location/Edit'),
+)
 
 /* Restricted routes */
+const Login = lazy(() => import('pages/Login'))
+const Register = lazy(() => import('pages/Register'))
 
 /* Error routes */
 const Page404 = lazy(() => import('pages/Page404'))
 
 export const AppRoutes: AppRoute[] = [
   // Restricted Routes
+  {
+    type: RouteType.RESTRICTED,
+    path: '/login',
+    children: <Login />,
+  },
+  {
+    type: RouteType.RESTRICTED,
+    path: '/signup',
+    children: <Register />,
+  },
   // Private Routes
+  {
+    type: RouteType.PRIVATE,
+    path: '/dashboard',
+    children: <Dashboard />,
+  },
+  {
+    type: RouteType.PRIVATE,
+    path: '/dashboard/location',
+    children: <DashboardLocation />,
+  },
+  {
+    type: RouteType.PRIVATE,
+    path: '/dashboard/location/add',
+    children: <DashboardLocationAdd />,
+  },
+  {
+    type: RouteType.PRIVATE,
+    path: '/dashboard/location/edit',
+    children: <DashboardLocationEdit />,
+  },
+  {
+    type: RouteType.PRIVATE,
+    path: '/profile/:userId',
+    children: <Profile />,
+  },
   // Public Routes
   {
     type: RouteType.PUBLIC,
