@@ -1,10 +1,11 @@
-@import '../fonts/fonts.css';
+// @import '../fonts/fonts.css';
 // Override Bootstrap Variables.
 // For example: $grid-gutter-width-base:  20px;
 // For example: $grid-gutter-width: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 /* make the customizations */
-$font-family-base: 'Montserrat';
+$font-family-base: 'Roboto';
 
 // //Bootstrap
 // @import '~bootstrap/scss/bootstrap';
