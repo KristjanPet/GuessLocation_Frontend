@@ -1,5 +1,13 @@
-.layout-container {
-  height: calc(100vh - 200px);
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto';
+}
+
+a {
+  text-decoration: none !important;
 }
 
 #login-page footer,
@@ -15,17 +23,12 @@
   padding: 25px 0;
 }
 
-.sidebar__btn-menu,
-.topbar {
-  height: 80px;
+.navbar-avatar {
+  width: 40px !important;
+  height: 40px !important;
 }
 
-.topbar__avatar {
-  width: 50px !important;
-  height: 50px !important;
-}
-
-.topbar__avatar img {
-  width: 50px !important;
-  height: 50px !important;
+.navbar-avatar img {
+  width: 40px !important;
+  height: 40px !important;
 }

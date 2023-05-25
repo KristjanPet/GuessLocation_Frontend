@@ -49,9 +49,9 @@ const NavbarMenuForm: FC = () => {
   return (
     <>
       <AiOutlineMenu
-        size={28}
+        size={24}
         onClick={toggleWindow}
-        className="mx-3 text-orange"
+        className="mx-3 text-primary"
       />
       {/* SIGN OUT SETTINGS */}
       <Popup modal nested open={windowOpen}>

@@ -6,6 +6,7 @@ import { apiRoutes } from 'constants/apiConstants'
 // import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
 import { UserType } from 'models/auth'
 import { apiRequest } from './Api'
+import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 
 export const fetchUser = async () =>
   apiRequest<undefined, UserType>('get', apiRoutes.FETCH_USER)
@@ -13,8 +14,8 @@ export const fetchUser = async () =>
 export const signout = async () =>
   apiRequest<undefined, void>('post', apiRoutes.SIGNOUT)
 
-// export const login = async (data: LoginUserFields) =>
-//   apiRequest<LoginUserFields, UserType>('post', apiRoutes.LOGIN, data)
+export const login = async (data: LoginUserFields) =>
+  apiRequest<LoginUserFields, UserType>('post', apiRoutes.LOGIN, data)
 
 // export const register = async (data: RegisterUserFields) =>
 //   apiRequest<RegisterUserFields, void>('post', apiRoutes.SIGNUP, data)
