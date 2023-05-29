@@ -36,100 +36,103 @@ const LoginForm: FC = () => {
 
   return (
     <>
-      <Form className="login-form" onSubmit={onSubmit}>
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          <p className="signup-text-black m-0">
-            Welcome <span className="text-orange">back!</span>{' '}
-          </p>
-          <p className="signup-text-small ">
-            Thank you for coming back. Hope you have a good day and inspire
-            others.
-          </p>
-        </div>
-        <Controller
-          control={control}
-          name="email"
-          render={({ field }) => (
-            <Form.Group className="mb-2">
-              <FormLabel htmlFor="email" className="signup-text-xsmall mb-1">
-                Email
-              </FormLabel>
-              <input
-                {...field}
-                type="email"
-                placeholder="example@email.com"
-                aria-label="Email"
-                aria-describedby="email"
-                className={`${
-                  errors.email ? 'form-control is-invalid' : 'form-control'
-                } form-section-orange signup-text-xsmall`}
-              />
-              {errors.email && (
-                <div className="Invalid-feedback text-danger">
-                  {errors.email.message}
-                </div>
-              )}
-            </Form.Group>
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <Form.Group className="mb-3">
-              <FormLabel htmlFor="password" className="signup-text-xsmall mb-1">
-                Password
-              </FormLabel>
-              <input
-                {...field}
-                type="password"
-                placeholder="***********"
-                aria-label="Password"
-                aria-describedby="password"
-                className={`${
-                  errors.password ? 'form-control is-invalid' : 'form-control'
-                } form-section-orange`}
-              />
-              {errors.password && (
-                <div className="Invalid-feedback text-danger">
-                  {errors.password.message}
-                </div>
-              )}
-            </Form.Group>
-          )}
-        />
-
-        <Button
-          className="w-100 orange-border login-button-litlle mb-2"
-          type="submit"
-        >
-          {' '}
-          Login{' '}
-        </Button>
-
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <p className="mb-0">Dont have account?</p>
-          <Link
-            className="text-decoration-none text-end text-orange"
-            to={routes.SIGNUP}
-          >
-            Sign up
+      <div className="flex justify-center items-center md:justify-start mt-36 md:mt-0">
+        <div className=" md:grid md:columns-2 md:h-screen ">
+          <Link className="m-4 mobile-hidden " to={routes.HOME}>
+            <img src="/images/NavbarLogo.svg" alt="GeoTagger" width={171} />
           </Link>
+          <Form
+            className="flex flex-col max-w-md mx-auto px-7 gap-3 md:row-start-2 md:col-start-2"
+            onSubmit={onSubmit}
+          >
+            <div className="flex flex-col items-center p-1">
+              <h3 className="text-dark text-5xl font-medium mb-2">Sign in</h3>
+              <p className="text-dark font-normal text-center">
+                Welcome back to Geotagger. We are glad that you are back.
+              </p>
+            </div>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field }) => (
+                <Form.Group className="mb-2 text-xs font-medium text-dark">
+                  <FormLabel htmlFor="email" className="">
+                    Email
+                  </FormLabel>
+                  <input
+                    {...field}
+                    type="text"
+                    placeholder="example@email.com"
+                    aria-label="Email"
+                    aria-describedby="email"
+                    className="flex flex-col items-center border w-full h-11  px-3"
+                  />
+                  {errors.email && (
+                    <div className="Invalid-feedback text-danger">
+                      {errors.email.message}
+                    </div>
+                  )}
+                </Form.Group>
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="password"
+              render={({ field }) => (
+                <Form.Group className="mb-3 text-xs font-medium text-dark">
+                  <FormLabel htmlFor="password" className="">
+                    Password
+                  </FormLabel>
+                  <input
+                    {...field}
+                    type="password"
+                    placeholder="***********"
+                    aria-label="Password"
+                    aria-describedby="password"
+                    className="flex flex-col items-center border w-full h-11 px-3"
+                  />
+                  {errors.password && (
+                    <div className="Invalid-feedback text-danger">
+                      {errors.password.message}
+                    </div>
+                  )}
+                  {showError && <div className="text-danger">{apiError}</div>}
+                </Form.Group>
+              )}
+            />
+
+            <Button
+              className=" w-full bg-primary text-white rounded py-2"
+              type="submit"
+            >
+              {' '}
+              SIGN IN{' '}
+            </Button>
+
+            <div className="flex justify-between mb-2">
+              <p className="mb-0 text-dark">
+                Do you want to create an account?
+              </p>
+              <Link className="text-primary" to={routes.SIGNUP}>
+                Sign up
+              </Link>
+            </div>
+          </Form>
         </div>
-      </Form>
-      {showError && (
-        <ToastContainer className="p-3" position="top-end">
-          <Toast onClose={() => setShowError(false)} show={showError}>
-            <Toast.Header>
-              <strong className="me-suto text-danger">Error</strong>
-            </Toast.Header>
-            <Toast.Body className="text-danger" bg-light>
-              {apiError}
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
+        <div className=" laptop-hidden absolute right-0 top-0 h-full md:w-2/5 desktop:w-3/5">
+          <img
+            src="images/loginImage.png"
+            alt="login image"
+            className=" object-cover h-full z-0 w-full"
+          />
+          <img
+            src="images/loginLogo.svg"
+            alt="login image"
+            className=" z-10 absolute right-1/3 top-1/3 m-auto w-auto"
+          />
+        </div>
+      </div>
     </>
   )
 }

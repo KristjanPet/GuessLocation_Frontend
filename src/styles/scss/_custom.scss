@@ -4,10 +4,56 @@ html {
 
 body {
   font-family: 'Roboto';
+  height: 100%;
 }
 
 a {
   text-decoration: none !important;
+}
+
+@media (max-width: 1150px) {
+  //laptop
+  #login-page nav,
+  #signup-page nav {
+    display: flex !important;
+  }
+
+  .laptop-hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 1150px) {
+  //laptop
+  #login-page nav,
+  #signup-page nav {
+    display: flex !important;
+  }
+
+  .laptop-hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 1570px) {
+  .laptop-hidden {
+    width: 750px;
+  }
+}
+
+@media (min-width: 769px) {
+  //mobile
+  #login-page nav,
+  #signup-page nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 769px) {
+  //mobile
+  .mobile-hidden {
+    display: none;
+  }
 }
 
 #login-page footer,
@@ -15,12 +61,19 @@ a {
   display: none !important;
 }
 
-.login-form,
-.register-form {
-  width: 100%;
-  width: min(100%, 420px);
-  margin: 0 auto;
-  padding: 25px 0;
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  max-width: 80rem;
+}
+
+#login-page .container,
+#signup-page .container {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  // max-width: 100%;
 }
 
 .navbar-avatar {

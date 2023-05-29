@@ -9,8 +9,8 @@ export interface LoginUserFields {
 
 export const useLoginForm = () => {
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email().required('please enter a vild email'),
-    password: Yup.string(),
+    email: Yup.string().email().required('Please enter a valid email'),
+    password: Yup.string().required('Please enter a password'),
   })
 
   const {
