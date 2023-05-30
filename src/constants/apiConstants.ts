@@ -1,11 +1,11 @@
 export enum apiRoutes {
   LOGIN = '/auth/login',
-  SIGNUP = '/auth/register',
+  SIGNUP = '/auth/signup',
   SIGNOUT = '/auth/signout',
   REFRESH_TOKENS = '/auth/refresh',
   FETCH_USER = '/auth',
-  FETCH_USERS = '/users',
-  USERS_PREFIX = '/users',
-  UPLOAD_AVATAR_IMAGE = '/users/upload',
-  GET_AVATAR_IMAGE = '/users/get/image',
+  FETCH_USERS = '/user',
+  USERS_PREFIX = '/user',
+  UPLOAD_AVATAR_IMAGE = '/user/upload',
+  GET_AVATAR_IMAGE = '/user/get/image',
 }

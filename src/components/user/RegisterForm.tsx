@@ -42,6 +42,8 @@ const LoginForm: FC = () => {
         email: data.email,
         password: data.password,
       })
+      console.log(loginResponse.data)
+
       if (loginResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
         setApiError(loginResponse.data.message)
         setShowError(true)
@@ -51,6 +53,7 @@ const LoginForm: FC = () => {
         setApiError(loginResponse.data.message)
         setShowError(true)
       } else {
+        authStore.login(loginResponse.data)
         // Upload avatar
         const formData = new FormData()
         formData.append('avatar', file, file.name)
@@ -179,6 +182,9 @@ const LoginForm: FC = () => {
                   {errors.email.message}
                 </div>
               )}
+              {apiError && (
+                <div className="Invalid-feedback text-danger">{apiError}</div>
+              )}
             </Form.Group>
           )}
         />
@@ -303,11 +309,12 @@ const LoginForm: FC = () => {
         <Button
           className="w-full bg-primary text-white rounded py-2"
           type="submit"
+          onMouseUp={handleFileError}
         >
           Sign up
         </Button>
-        <div className="flex justify-between mb-2">
-          <p className="mb-0 text-dark">Already have an account?</p>
+        <div className="flex justify-between  mt-2">
+          <p className=" text-dark">Already have an account?</p>
           <Link className="text-primary" to={routes.LOGIN}>
             Sign in
           </Link>
