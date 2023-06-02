@@ -27,6 +27,12 @@ const LoginForm: FC = () => {
   const [preview, setPreview] = useState<string | null>(null)
   const [fileError, setFileError] = useState(false)
 
+  //HIDE PASS
+  const [pwd, setPwd] = useState('')
+
+  const [pVisible, setPVisible] = useState(false)
+  const [cVisible, setCVisible] = useState(false)
+
   const onSubmit = handleSubmit(async (data: RegisterUserFields) => {
     if (!file) return
     const response = await API.register(data)
@@ -124,7 +130,7 @@ const LoginForm: FC = () => {
           </p>
         </div>
         <Form.Group className="flex flex-col justify-center items-center">
-          <FormLabel htmlFor="avatar" id="avatar-p" className="">
+          <FormLabel htmlFor="avatar" id="avatar-p" className=" relative">
             {/* <div id="avatarParent">
               <div id="avatar">
                 <Avatar round src={preview as string ?  preview as string : '/images/blankAvatarIcon.svg'} alt="avatar"/>
@@ -133,15 +139,19 @@ const LoginForm: FC = () => {
                 <Avatar round src='/images/uploadAvatar.svg' alt="avatar"/>
               </div>
             </div> */}
-            <img
-              className=" rounded-full w-16 h-16"
-              src={
-                (preview as string)
-                  ? (preview as string)
-                  : '/images/blankAvatarIcon.svg'
-              }
-              alt="avatar"
-            />
+
+            <div className=" relative w-16 h-16 [&>*]:h-16 [&>*]:w-16 ">
+              <img
+                className=" rounded-full  absolute hover:opacity-0 duration-100 object-cover"
+                src={preview ? preview : '/images/blankAvatarIcon.svg'}
+                alt="avatar"
+              />
+              <img
+                className=" rounded-full absolute opacity-0 hover:opacity-100 duration-100"
+                src={'/images/uploadAvatar.svg'}
+                alt="avatar"
+              />
+            </div>
           </FormLabel>
           <input
             onChange={handleFileChange}
@@ -261,14 +271,30 @@ const LoginForm: FC = () => {
               >
                 Password
               </FormLabel>
-              <input
-                {...field}
-                type="password"
-                placeholder="************"
-                aria-label="Password"
-                aria-describedby="password"
-                className="flex flex-col items-center border-b-2 w-full h-11 px-3 text-xs"
-              />
+              <div className=" flex flex-row border-b-2">
+                <input
+                  {...field}
+                  name="pwd"
+                  type={pVisible ? 'text' : 'password'}
+                  value={pwd}
+                  onChange={(e) => setPwd(e.target.value)}
+                  placeholder="************"
+                  aria-label="Password"
+                  aria-describedby="password"
+                  className="flex flex-col items-center  w-full h-11 px-3 text-xs"
+                />
+                <img
+                  title={pVisible ? 'Hide password' : 'Show password'}
+                  src={
+                    pVisible
+                      ? 'images/hidePassword.svg'
+                      : 'images/showPassword.svg'
+                  }
+                  onClick={() => setPVisible(!pVisible)}
+                  width={20}
+                />
+              </div>
+
               {errors.password && (
                 <div className="Invalid-feedback text-danger">
                   {errors.password.message}
@@ -289,14 +315,27 @@ const LoginForm: FC = () => {
               >
                 Confirm Password
               </FormLabel>
-              <input
-                {...field}
-                type="password"
-                placeholder="************"
-                aria-label="confirm_Password"
-                aria-describedby="confirm_password"
-                className="flex flex-col items-center border-b-2 w-full h-11 px-3 text-xs"
-              />
+              <div className=" flex flex-row border-b-2">
+                <input
+                  {...field}
+                  type={cVisible ? 'text' : 'password'}
+                  placeholder="************"
+                  aria-label="confirm_Password"
+                  aria-describedby="confirm_password"
+                  className="flex flex-col items-center border-b-2 w-full h-11 px-3 text-xs"
+                />
+                <img
+                  title={cVisible ? 'Hide password' : 'Show password'}
+                  src={
+                    cVisible
+                      ? 'images/hidePassword.svg'
+                      : 'images/showPassword.svg'
+                  }
+                  onClick={() => setCVisible(!cVisible)}
+                  width={20}
+                />
+              </div>
+
               {errors.confirm_password && (
                 <div className="Invalid-feedback text-danger">
                   {errors.confirm_password.message}
