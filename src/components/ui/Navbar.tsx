@@ -67,9 +67,9 @@ const Navbar: FC = () => {
               </Link>
 
               <div className="" id="navbarTogglerDemo02">
-                <ul className="flex flex-row items-center gap-12 ">
-                  {authStore.user ? (
-                    <>
+                {authStore.user ? (
+                  <>
+                    <ul className="flex flex-row items-center gap-12 ">
                       <li className="text-dark">
                         <NavLink to={routes.HOME}>Home</NavLink>
                       </li>
@@ -118,9 +118,11 @@ const Navbar: FC = () => {
                           <img src="/images/addIcon.svg" alt="Add" width={15} />
                         </div>
                       </li>
-                    </>
-                  ) : (
-                    <>
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <ul className="flex flex-row items-center gap-4 hide-login">
                       <li className="">
                         <NavLink
                           to={routes.LOGIN}
@@ -142,9 +144,9 @@ const Navbar: FC = () => {
                           </button>
                         </NavLink>
                       </li>
-                    </>
-                  )}
-                </ul>
+                    </ul>
+                  </>
+                )}
               </div>
             </>
           )}
