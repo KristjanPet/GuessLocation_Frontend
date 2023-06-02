@@ -2,9 +2,9 @@ import { FC } from 'react'
 
 const Footer: FC = () => {
   return (
-    <footer className="container-xxl d-flex justify-content-between align-items-center p-4">
-      <img src="/images/logo.png" alt="SkillUp Mentor" width={123} />
-      <p className="mb-0">&copy; 2023</p>
+    <footer className=" bg-primary flex flex-row justify-between p-4">
+      <img src="/images/logo.svg" alt="Geotagger" width={123} />
+      <p className=" text-white">All Right Reserver | skillupmentor.com</p>
     </footer>
   )
 }
