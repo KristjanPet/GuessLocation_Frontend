@@ -1,124 +1,24 @@
 import Layout from 'components/ui/Layout'
+import { routes } from 'constants/routesConstants'
 import { FC } from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Home: FC = () => {
   return (
     <Layout>
-      <div className="p-2 mb-4">
-        <div className="container-fluid py-4">
-          <h1 className=" font-bold text-5xl">Welcome</h1>
-          <p className="col-md-8 fs-4">
-            In this tutorial you will learn how to use:
-          </p>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-          <ol>
-            <li>react-bootstrap</li>
-            <li>react-hook-form with yup validation</li>
-            <li>CRUD functionality - Create Read Update Delete</li>
-            <li>file upload with NestJS</li>
-            <li>connect ReactJS and NestJS</li>
-            <li>setup NestJS with custom logging</li>
-            <li>connect to PostgreSQL database using TypeORM</li>
-            <li>create dtos with validation</li>
-            <li>deploy ReactJS to AWS S3 Bucket</li>
-            <li>deploy NestJS to AWS ECS (Elastic Container Service)</li>
-          </ol>
-        </div>
+      <div className="p-4 mb-4 flex flex-col items-center">
+        <h1 className=" font-normal text-4xl text-primary text-center">
+          Explore the world with Geotagger!
+        </h1>
+        <p className="text-dark text-center mt-8">
+          Geotagger is website that allows you to post picture and tag it on the
+          map. Other user than try to locate it via Google Maps.{' '}
+        </p>
+        <NavLink to={routes.SIGNUP} className="mt-12">
+          <button className=" bg-primary rounded text-white px-10 py-0.5">
+            Sign up
+          </button>
+        </NavLink>
       </div>
     </Layout>
   )
