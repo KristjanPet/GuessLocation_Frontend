@@ -12,16 +12,16 @@ import * as API from 'api/Api'
 import { StatusCode } from 'constants/errorConstants'
 import authStore from 'stores/auth.store'
 import { observer } from 'mobx-react'
-import { LoginUserFields, useLoginForm } from 'hooks/react-hook-form/useLogin'
+import { EmailUserFields, useEmailForm } from 'hooks/react-hook-form/useEmail'
 
-const LoginForm: FC = () => {
+const RestorePasswordForm: FC = () => {
   const navigate = useNavigate()
-  const { handleSubmit, errors, control } = useLoginForm()
+  const { handleSubmit, errors, control } = useEmailForm()
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)
 
-  const onSubmit = handleSubmit(async (data: LoginUserFields) => {
-    const response = await API.login(data)
+  const onSubmit = handleSubmit(async (data: EmailUserFields) => {
+    const response = await API.emailSend(data)
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
       setApiError(response.data.message)
       setShowError(true)
@@ -29,8 +29,7 @@ const LoginForm: FC = () => {
       setApiError(response.data.message)
       setShowError(true)
     } else {
-      authStore.login(response.data)
-      navigate(routes.HOME)
+      navigate(routes.LOGIN)
     }
   })
 
@@ -46,9 +45,11 @@ const LoginForm: FC = () => {
             onSubmit={onSubmit}
           >
             <div className="flex flex-col items-center p-1">
-              <h3 className="text-dark text-5xl font-medium mb-2">Sign in</h3>
+              <h3 className="text-dark text-5xl text-center font-medium mb-2">
+                Change password
+              </h3>
               <p className="text-dark font-normal text-center">
-                Welcome back to Geotagger. We are glad that you are back.
+                You will get the link to change your password on provided email.
               </p>
             </div>
             <Controller
@@ -76,52 +77,20 @@ const LoginForm: FC = () => {
               )}
             />
 
-            <Controller
-              control={control}
-              name="password"
-              render={({ field }) => (
-                <Form.Group className="mb-3 text-xs font-medium text-dark">
-                  <FormLabel htmlFor="password" className="">
-                    Password
-                  </FormLabel>
-                  <input
-                    {...field}
-                    type="password"
-                    placeholder="***********"
-                    aria-label="Password"
-                    aria-describedby="password"
-                    className="flex flex-col items-center border w-full h-11 px-3"
-                  />
-                  {errors.password && (
-                    <div className="Invalid-feedback text-danger">
-                      {errors.password.message}
-                    </div>
-                  )}
-                  {showError && <div className="text-danger">{apiError}</div>}
-                </Form.Group>
-              )}
-            />
-
             <Button
               className=" w-full bg-primary text-white rounded py-2"
               type="submit"
             >
               {' '}
-              SIGN IN{' '}
+              SEND{' '}
             </Button>
 
-            <div className="flex justify-between mt-2">
-              <p className="mb-0 text-dark">Forgot your password?</p>
-              <Link className="text-primary" to={routes.RESTORE_PASSWORD}>
-                Change password
-              </Link>
-            </div>
             <div className="flex justify-between mb-2">
               <p className="mb-0 text-dark">
-                Do you want to create an account?
+                Do you want to go back to sign in?
               </p>
-              <Link className="text-primary" to={routes.SIGNUP}>
-                Sign up
+              <Link className="text-primary" to={routes.LOGIN}>
+                Sign in
               </Link>
             </div>
           </Form>
@@ -143,4 +112,4 @@ const LoginForm: FC = () => {
   )
 }
 
-export default observer(LoginForm)
+export default observer(RestorePasswordForm)

@@ -14,7 +14,7 @@ a {
 @media (max-width: 1150px) {
   //laptop
   #login-page nav,
-  #signup-page nav {
+  #signup-page nav #restorePassword-page nav {
     display: flex !important;
   }
 
@@ -26,7 +26,8 @@ a {
 @media (max-width: 1150px) {
   //laptop
   #login-page nav,
-  #signup-page nav {
+  #signup-page nav,
+  #restorePassword-page nav {
     display: flex !important;
   }
 
@@ -44,7 +45,8 @@ a {
 @media (min-width: 769px) {
   //mobile
   #login-page nav,
-  #signup-page nav {
+  #signup-page nav,
+  #restorePassword-page nav {
     display: none !important;
   }
 }
@@ -57,7 +59,8 @@ a {
 }
 
 #login-page footer,
-#signup-page footer {
+#signup-page footer,
+#restorePassword-page footer {
   display: none !important;
 }
 
@@ -69,7 +72,8 @@ a {
 }
 
 #login-page .container,
-#signup-page .container {
+#signup-page .container,
+#restorePassword-page .container {
   margin-left: 0;
   margin-right: 0;
   padding: 0;

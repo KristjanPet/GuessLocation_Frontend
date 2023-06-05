@@ -2,24 +2,28 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const onDefault = () => {
-  document.title = 'Tutorial'
+  document.title = 'Home'
   document.body.id = ''
 }
 const onHome = () => {
-  document.title = 'Tutorial'
+  document.title = 'Home'
   document.body.id = 'home-page'
 }
 const onDashboard = () => {
-  document.title = 'Tutorial - Dashboard'
+  document.title = 'Dashboard'
   document.body.id = 'dashboard-page'
 }
 const onLogin = () => {
-  document.title = 'Tutorial - Login'
+  document.title = 'Login'
   document.body.id = 'login-page'
 }
 const onSignup = () => {
-  document.title = 'Tutorial - Signup'
+  document.title = 'Signup'
   document.body.id = 'signup-page'
+}
+const onRestorePassword = () => {
+  document.title = 'Restore password'
+  document.body.id = 'restorePassword-page'
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,6 +42,7 @@ const callbacks: any = {
   '/dashboard/orders': [onDashboard],
   '/login': [onLogin],
   '/signup': [onSignup],
+  '/restore_password': [onRestorePassword],
   '*': [onDefault],
 }
 

@@ -29,6 +29,7 @@ const DashboardLocationEdit = lazy(
 /* Restricted routes */
 const Login = lazy(() => import('pages/Login'))
 const Register = lazy(() => import('pages/Register'))
+const RestorePssword = lazy(() => import('pages/RestorePassword'))
 
 /* Error routes */
 const Page404 = lazy(() => import('pages/Page404'))
@@ -44,6 +45,11 @@ export const AppRoutes: AppRoute[] = [
     type: RouteType.RESTRICTED,
     path: '/signup',
     children: <Register />,
+  },
+  {
+    type: RouteType.RESTRICTED,
+    path: '/restore_password',
+    children: <RestorePssword />,
   },
   // Private Routes
   {
