@@ -6,19 +6,84 @@ import { NavLink } from 'react-router-dom'
 const Home: FC = () => {
   return (
     <Layout>
-      <div className="p-4 mb-4 flex flex-col items-center">
-        <h1 className=" font-normal text-4xl text-primary text-center">
-          Explore the world with Geotagger!
-        </h1>
-        <p className="text-dark text-center mt-8">
-          Geotagger is website that allows you to post picture and tag it on the
-          map. Other user than try to locate it via Google Maps.{' '}
-        </p>
-        <NavLink to={routes.SIGNUP} className="mt-12">
-          <button className=" bg-primary rounded text-white px-10 py-0.5">
-            Sign up
-          </button>
-        </NavLink>
+      <div className="p-4 mb-4 grid grid-cols-6 justify-items-center">
+        <div className="col-span-full z-10 grid justify-items-center m-auto md:col-start-1 md:col-end-3 md:justify-items-start md:row-start-1">
+          <h1 className=" font-normal text-4xl text-primary text-center md:text-6xl md:font-medium md:text-left">
+            Explore the world with Geotagger!
+          </h1>
+          <p className="text-dark text-center mt-8 md:text-left">
+            Geotagger is website that allows you to post picture and tag it on
+            the map. Other user than try to locate it via Google Maps.{' '}
+          </p>
+          <NavLink to={routes.SIGNUP} className="mt-12">
+            <button className="bg-primary rounded text-white px-10 py-2">
+              SIGN IN
+            </button>
+          </NavLink>
+        </div>
+
+        <div className="mt-8 col-span-full z-0 md:col-start-2 md:row-start-1">
+          <img src="images/map.svg" alt="map" width={1150} />
+        </div>
+
+        <div className="col-span-full">
+          <h3 className="font-normal text-2xl mt-8 text-primary text-center md:text-4xl md:mt-14">
+            Try yourself at Geotagger!
+          </h3>
+        </div>
+
+        <div className="col-span-full md:mx-80">
+          <p className=" text-dark text-center mt-2 ">
+            Try to guess the location of image by selecting position on the map.
+            When you guess it, it gives you the error distance.
+          </p>
+        </div>
+
+        <div className="col-span-full grid grid-cols-3 gap-2 mt-8">
+          <div className="relative col-span-full md:col-span-1">
+            <img
+              src="images/lockedCard1.svg"
+              alt="locekd Card"
+              className=" relative top-0 left-0"
+            />
+            <img
+              src="images/lock.svg"
+              alt="locekd Card"
+              className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
+          <div className="relative col-span-full md:col-span-1">
+            <img
+              src="images/lockedCard2.svg"
+              alt="locekd Card"
+              className=" relative top-0 left-0"
+            />
+            <img
+              src="images/lock.svg"
+              alt="locekd Card"
+              className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
+          <div className="relative col-span-full md:col-span-1">
+            <img
+              src="images/lockedCard3.svg"
+              alt="locekd Card"
+              className=" relative top-0 left-0"
+            />
+            <img
+              src="images/lock.svg"
+              alt="locekd Card"
+              className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
+        </div>
+        <div className="my-12 col-span-full">
+          <NavLink to={routes.SIGNUP}>
+            <button className="bg-primary rounded text-white px-10 py-2">
+              SIGN UP
+            </button>
+          </NavLink>
+        </div>
       </div>
     </Layout>
   )
