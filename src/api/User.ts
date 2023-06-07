@@ -9,6 +9,7 @@ import { apiRequest } from './Api'
 import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
 import { EmailUserFields } from 'hooks/react-hook-form/useEmail'
+import { PasswordUserFields } from 'hooks/react-hook-form/usePassword'
 
 export const fetchUser = async () =>
   apiRequest<undefined, UserType>('get', apiRoutes.FETCH_USER)
@@ -24,6 +25,9 @@ export const register = async (data: RegisterUserFields) =>
 
 export const emailSend = async (data: EmailUserFields) =>
   apiRequest<EmailUserFields, void>('post', apiRoutes.FORGOT_PASSWORD, data)
+
+export const resetPassword = async (data: PasswordUserFields) =>
+  apiRequest<PasswordUserFields, void>('post', apiRoutes.RESET_PASSWORD, data)
 
 export const refreshTokens = async () =>
   apiRequest<undefined, UserType>('get', apiRoutes.REFRESH_TOKENS)

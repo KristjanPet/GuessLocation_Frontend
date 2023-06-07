@@ -1,14 +1,14 @@
 import CreateLocationForm from 'components/location/CreateLocationForm'
 import DashboardLayout from 'components/ui/DashboardLayout'
+import Layout from 'components/ui/Layout'
 import { FC } from 'react'
 
-const DashboardUsersAdd: FC = () => {
+const LocationAdd: FC = () => {
   return (
-    <DashboardLayout>
-      <h1 className="mb-4 text-center">Create location</h1>
+    <Layout>
       <CreateLocationForm />
-    </DashboardLayout>
+    </Layout>
   )
 }
 
-export default DashboardUsersAdd
+export default LocationAdd

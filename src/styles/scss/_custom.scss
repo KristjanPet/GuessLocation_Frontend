@@ -14,7 +14,9 @@ a {
 @media (max-width: 1150px) {
   //laptop
   #login-page nav,
-  #signup-page nav #restorePassword-page nav {
+  #signup-page nav,
+  #restorePassword-page nav,
+  #resetPassword-page nav {
     display: flex !important;
   }
 
@@ -27,7 +29,8 @@ a {
   //laptop
   #login-page nav,
   #signup-page nav,
-  #restorePassword-page nav {
+  #restorePassword-page nav,
+  #resetPassword-page nav {
     display: flex !important;
   }
 
@@ -46,7 +49,8 @@ a {
   //mobile
   #login-page nav,
   #signup-page nav,
-  #restorePassword-page nav {
+  #restorePassword-page nav,
+  #resetPassword-page nav {
     display: none !important;
   }
 }
@@ -60,7 +64,8 @@ a {
 
 #login-page footer,
 #signup-page footer,
-#restorePassword-page footer {
+#restorePassword-page footer,
+#resetPassword-page footer {
   display: none !important;
 }
 
@@ -73,7 +78,8 @@ a {
 
 #login-page .container,
 #signup-page .container,
-#restorePassword-page .container {
+#restorePassword-page .container,
+#resetPassword-page .container {
   margin-left: 0;
   margin-right: 0;
   padding: 0;
@@ -88,4 +94,13 @@ a {
 .navbar-avatar img {
   width: 40px !important;
   height: 40px !important;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+  display: none;
+}
+
+.mapboxgl-canvas {
+  width: 21.5rem;
+  height: 12.18rem;
 }

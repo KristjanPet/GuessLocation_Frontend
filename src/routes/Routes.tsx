@@ -3,6 +3,7 @@ import { Route, RouteProps, Routes as Switch } from 'react-router-dom'
 
 import PrivateRoute from './PrivateRoute'
 import RestrictedRoute from './RestrictedRoute'
+import LocationAdd from 'pages/Dashboard/Location/Add'
 
 export enum RouteType {
   PUBLIC,
@@ -29,7 +30,8 @@ const DashboardLocationEdit = lazy(
 /* Restricted routes */
 const Login = lazy(() => import('pages/Login'))
 const Register = lazy(() => import('pages/Register'))
-const RestorePssword = lazy(() => import('pages/RestorePassword'))
+const RestorePassword = lazy(() => import('pages/RestorePassword'))
+const RefreshPassword = lazy(() => import('pages/RefreshPassword'))
 
 /* Error routes */
 const Page404 = lazy(() => import('pages/Page404'))
@@ -49,7 +51,12 @@ export const AppRoutes: AppRoute[] = [
   {
     type: RouteType.RESTRICTED,
     path: '/restore_password',
-    children: <RestorePssword />,
+    children: <RestorePassword />,
+  },
+  {
+    type: RouteType.RESTRICTED,
+    path: '/reset_password',
+    children: <RefreshPassword />,
   },
   // Private Routes
   {
@@ -65,7 +72,7 @@ export const AppRoutes: AppRoute[] = [
   {
     type: RouteType.PRIVATE,
     path: '/dashboard/location/add',
-    children: <DashboardLocationAdd />,
+    children: <LocationAdd />,
   },
   {
     type: RouteType.PRIVATE,

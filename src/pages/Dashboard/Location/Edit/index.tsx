@@ -1,16 +1,17 @@
 import UpdateLocationForm from 'components/location/UpdateLocationForm'
 import DashboardLayout from 'components/ui/DashboardLayout'
-import React, { FC } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import mapboxgl, { Map } from 'mapbox-gl'
 
-const DashboardUsersEdit: FC = () => {
-  const location = useLocation()
+const DashboardLocationEdit: FC = () => {
   return (
     <DashboardLayout>
       <h1 className="mb-4 text-center">Edit Location</h1>
+
       {/* <UpdateLocationForm defaultValues={location.state} /> */}
     </DashboardLayout>
   )
 }
 
-export default DashboardUsersEdit
+export default DashboardLocationEdit

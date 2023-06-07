@@ -25,6 +25,10 @@ const onRestorePassword = () => {
   document.title = 'Restore password'
   document.body.id = 'restorePassword-page'
 }
+const onResetPassword = () => {
+  document.title = 'Reset password'
+  document.body.id = 'resetPassword-page'
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callbacks: any = {
@@ -43,6 +47,7 @@ const callbacks: any = {
   '/login': [onLogin],
   '/signup': [onSignup],
   '/restore_password': [onRestorePassword],
+  '/reset_password': [onResetPassword],
   '*': [onDefault],
 }
 

@@ -3,6 +3,7 @@ export enum apiRoutes {
   SIGNUP = '/auth/signup',
   SIGNOUT = '/auth/signout',
   FORGOT_PASSWORD = '/auth/forgot-password',
+  RESET_PASSWORD = '/auth/reset-password',
   REFRESH_TOKENS = '/auth/refresh',
   FETCH_USER = '/auth',
   FETCH_USERS = '/user',
