@@ -66,8 +66,8 @@ const CreateLocationForm: FC = () => {
         </div>
         <div className="mb-4">
           <img
-            className="w-full"
-            src={preview ? preview : '/images/blankLocation.svg'}
+            className="w-full h-48 md:h-72"
+            src={preview ? preview : '/images/blankLocation.png'}
             alt="avatar"
           />
           {/* <input
@@ -81,7 +81,7 @@ const CreateLocationForm: FC = () => {
           /> */}
         </div>
         <div className="mb-4 flex justify-end ">
-          <button className=" rounded bg-primary w-full mr-5 text-white py-2">
+          <button className=" rounded bg-primary w-full md:w-52 mr-5 text-white py-2">
             UPLOAD IMAGE
           </button>
           <div className=" bg-delete rounded w-10 p-2">
@@ -99,9 +99,11 @@ const CreateLocationForm: FC = () => {
             type="text"
             className=" border mb-4 border-gray-300 w-full py-2"
           />
-          <button className=" rounded bg-primary w-full mr-5 text-white py-2">
-            ADD NEW
-          </button>
+          <div className="flex justify-end">
+            <button className=" rounded bg-primary w-full md:w-36 text-white py-2">
+              ADD NEW
+            </button>
+          </div>
         </div>
       </div>
     </>
