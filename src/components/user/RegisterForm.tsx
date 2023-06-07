@@ -28,8 +28,6 @@ const LoginForm: FC = () => {
   const [fileError, setFileError] = useState(false)
 
   //HIDE PASS
-  const [pwd, setPwd] = useState('')
-
   const [pVisible, setPVisible] = useState(false)
   const [cVisible, setCVisible] = useState(false)
 
@@ -136,15 +134,6 @@ const LoginForm: FC = () => {
             </div>
             <Form.Group className="flex flex-col justify-center items-center">
               <FormLabel htmlFor="avatar" id="avatar-p" className=" relative">
-                {/* <div id="avatarParent">
-              <div id="avatar">
-                <Avatar round src={preview as string ?  preview as string : '/images/blankAvatarIcon.svg'} alt="avatar"/>
-              </div>
-              <div id="upload">
-                <Avatar round src='/images/uploadAvatar.svg' alt="avatar"/>
-              </div>
-            </div> */}
-
                 <div className=" relative w-16 h-16 [&>*]:h-16 [&>*]:w-16 ">
                   <img
                     className=" rounded-full  absolute hover:opacity-0 duration-100 object-cover"
@@ -281,10 +270,7 @@ const LoginForm: FC = () => {
                   <div className=" flex flex-row border-b-2">
                     <input
                       {...field}
-                      name="pwd"
                       type={pVisible ? 'text' : 'password'}
-                      value={pwd}
-                      onChange={(e) => setPwd(e.target.value)}
                       placeholder="************"
                       aria-label="Password"
                       aria-describedby="password"

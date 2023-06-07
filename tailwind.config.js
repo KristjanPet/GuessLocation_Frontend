@@ -8,6 +8,7 @@ module.exports = {
         dark: '#233D4D',
         white: '#ffffff',
         danger: 'rgb(185 28 28)',
+        delete: '#9B6161',
       },
       screens: {
         mobile: '769px',
