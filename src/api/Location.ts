@@ -6,6 +6,9 @@ import {
   createLocationType,
 } from 'models/location'
 
+export const getLocation = async (id: string) =>
+  apiRequest<undefined, LocationType>('get', `${apiRoutes.LOCATION}/${id}`)
+
 export const createLocation = async (data: createLocationType) =>
   apiRequest<createLocationType, LocationType>('post', apiRoutes.LOCATION, data)
 

@@ -1,5 +1,3 @@
-import UpdateLocationForm from 'components/location/UpdateLocationForm'
-import DashboardLayout from 'components/ui/DashboardLayout'
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import mapboxgl, { Map, MapMouseEvent, Marker } from 'mapbox-gl'
@@ -105,11 +103,6 @@ const CreateLocationForm: FC = () => {
   }, [])
 
   //IMAGE
-  const handleFileError = () => {
-    if (!file) setFileError(true)
-    else setFileError(false)
-  }
-
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     if (target.files) {
       const myFile = target.files[0]
