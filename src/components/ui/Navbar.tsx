@@ -114,9 +114,15 @@ const Navbar: FC = () => {
                             }
                           />
                         </Link>
-                        <div className={'bg-primary rounded-full p-3'}>
-                          <img src="/images/addIcon.svg" alt="Add" width={15} />
-                        </div>
+                        <Link to={routes.ADD_LOCATION}>
+                          <div className={'bg-primary rounded-full p-3'}>
+                            <img
+                              src="/images/addIcon.svg"
+                              alt="Add"
+                              width={15}
+                            />
+                          </div>
+                        </Link>
                       </li>
                     </ul>
                   </>
