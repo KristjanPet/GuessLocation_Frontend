@@ -26,17 +26,14 @@ const UpdateLocationForm: FC = () => {
   const [showError, setShowError] = useState(false)
 
   //GET
-  const { data: location, refetch } = useQuery<LocationType, Error>(
+  const { data: location } = useQuery<{ data: LocationType }, Error>(
     ['location', locationId],
     () => API.getLocation(locationId!),
     {
-      enabled: false, // Fetching is initially disabled
+      refetchOnWindowFocus: false, // Fetching is initially disabled
+      keepPreviousData: true,
     },
   )
-  useEffect(() => {
-    // Manually trigger the location fetch when the component mounts
-    refetch()
-  }, [refetch])
 
   //UPDATE
   const { handleSubmit, register } = useForm<UpdateLocationType>({
@@ -45,9 +42,9 @@ const UpdateLocationForm: FC = () => {
     },
   })
 
-  const onSubmit = async (data: UpdateLocationType) => {
+  const onSubmit = async () => {
     if (!file) {
-      setApiError('Image is required')
+      setApiError('New image is required')
       setShowError(true)
       return
     }
@@ -96,6 +93,10 @@ const UpdateLocationForm: FC = () => {
     }
   }
 
+  const handleCancleButtonClick = () => {
+    navigate(routes.HOME)
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className=" justify-center">
@@ -107,7 +108,11 @@ const UpdateLocationForm: FC = () => {
         <div className="mb-4">
           <img
             className="w-full h-64 md:h-96 object-cover"
-            src={preview ? preview : '/images/blankLocation.png'}
+            src={
+              preview
+                ? preview
+                : `${process.env.REACT_APP_API_URL}/files/${location?.data.avatar}`
+            }
             alt="avatar"
           />
           <input
@@ -127,7 +132,7 @@ const UpdateLocationForm: FC = () => {
           <p className="mr-2">Location:</p>
           <input
             type="text"
-            value={`${location}`}
+            value={`${location?.data.lat}, ${location?.data.lon}`}
             readOnly
             className="w-full"
           />
@@ -149,7 +154,11 @@ const UpdateLocationForm: FC = () => {
             >
               SAVE
             </button>
-            <button type="submit" className=" text-dark">
+            <button
+              onClick={handleCancleButtonClick}
+              type="button"
+              className=" text-dark"
+            >
               Cancle
             </button>
           </div>
