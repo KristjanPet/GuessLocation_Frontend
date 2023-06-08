@@ -34,6 +34,7 @@ const CreateLocationForm: FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const [apiError, setApiError] = useState('')
+  const [showError, setShowError] = useState(false)
 
   //CREATE
   const { handleSubmit, register } = useForm<createLocationType>({
@@ -47,27 +48,34 @@ const CreateLocationForm: FC = () => {
   const onSubmit = async (data: createLocationType) => {
     data.lat = markerLat
     data.lon = markerLon
+    if (!file) {
+      setApiError('Image is required')
+      setShowError(true)
+      return
+    }
     const response = await API.createLocation(data)
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
+      setShowError(true)
       setApiError(response.data.message)
     } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
+      setShowError(true)
       setApiError(response.data.message)
-    } else if (file) {
+    } else {
       // navigate(routes.HOME)
       const formData = new FormData()
       formData.append('avatar', file, file.name)
       const fileResponse = await API.updateLocation(formData, response.data.id)
       if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
+        setShowError(true)
         setApiError(fileResponse.data.message)
       } else if (
         fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
       ) {
+        setShowError(true)
         setApiError(fileResponse.data.message)
       } else {
         navigate(routes.HOME)
       }
-    } else {
-      setApiError('Avatar is required')
     }
   }
 
@@ -157,6 +165,7 @@ const CreateLocationForm: FC = () => {
             aria-describedby="avatar"
             className=" hidden"
           />
+          {showError && <div className="text-danger">{apiError}</div>}
         </div>
         <div className="mb-4 flex justify-end ">
           <button
