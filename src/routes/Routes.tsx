@@ -65,7 +65,7 @@ export const AppRoutes: AppRoute[] = [
   },
   {
     type: RouteType.PRIVATE,
-    path: '/dashboard/location',
+    path: '/dashboard/location/:locationId',
     children: <DashboardLocation />,
   },
   {

@@ -88,7 +88,7 @@ const CreateLocationForm: FC = () => {
       zoom: zoom,
     })
   })
-  const location = useLocation()
+  // const location = useLocation()
 
   useEffect(() => {
     if (map.current && marker) {
