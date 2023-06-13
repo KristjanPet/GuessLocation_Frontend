@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import * as API from 'api/Api'
@@ -7,10 +7,15 @@ import { routes } from 'constants/routesConstants'
 import { useForm } from 'react-hook-form'
 import { StatusCode } from 'constants/errorConstants'
 import mapboxgl, { Map, MapMouseEvent, Marker } from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import { GuessType, createGuessType } from 'models/guess'
+import GuessForm from 'components/guess/GuessForm'
 
-const LocationForm = () => {
+const LocationForm: FC = () => {
   const navigate = useNavigate()
   const { locationId } = useParams()
+
+  const [distance, setDistance] = useState<number | null>(null)
 
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<Map | null>(null)
@@ -38,26 +43,38 @@ const LocationForm = () => {
     },
   )
 
-  //UPDATE
-  const { handleSubmit, register } = useForm<LocationType>({
+  const { data: guesses, refetch: refetchGuesses } = useQuery<
+    { data: { data: GuessType[] } },
+    Error
+  >(['guesses', locationId], () => API.getGeuess(locationId!), {
+    refetchOnWindowFocus: false, // Fetching is initially disabled
+    keepPreviousData: true,
+  })
+
+  //GUESS
+  const { handleSubmit, register } = useForm<createGuessType>({
     defaultValues: {
-      avatar: '',
+      lon: 0,
+      lat: 0,
     },
   })
 
   const onSubmit = async () => {
-    // const fileResponse = await API.updateLocation(formData, locationId!)
-    // if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
-    //   setShowError(true)
-    //   setApiError(fileResponse.data.message)
-    // } else if (
-    //   fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
-    // ) {
-    //   setShowError(true)
-    //   setApiError(fileResponse.data.message)
-    // } else {
-    //   navigate(routes.HOME)
-    // }
+    const data: createGuessType = { lon: markerLon, lat: markerLat }
+    const fileResponse = await API.createGuess(data, locationId!)
+    if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
+      setShowError(true)
+      setApiError(fileResponse.data.message)
+    } else if (
+      fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
+    ) {
+      setShowError(true)
+      setApiError(fileResponse.data.message)
+    } else {
+      console.log(fileResponse.data)
+      setDistance(fileResponse.data.distance)
+      refetchGuesses()
+    }
   }
 
   //MAP
@@ -85,10 +102,21 @@ const LocationForm = () => {
     }
   }, [])
 
+  const formatDistance = (distance: number | null) => {
+    if (distance === null) {
+      return ''
+    } else if (distance < 1) {
+      const meters = Math.floor(distance * 1000)
+      return meters + ' m'
+    } else {
+      return Math.floor(distance) + ' km'
+    }
+  }
+
   return (
     <>
-      <div className="grid grid-flow-col auto-cols-auto columns-3">
-        <div className=" col-span-2">
+      <div className="grid md:grid-flow-col auto-cols-auto columns-3 gap-4">
+        <div className=" md:col-span-2">
           <form onSubmit={handleSubmit(onSubmit)} className=" justify-center">
             <div className="my-6">
               <h1 className=" text-4xl text-dark ">
@@ -117,7 +145,7 @@ const LocationForm = () => {
                 <p className="mb-1">Error distance</p>
                 <input
                   type="text"
-                  value={`${markerLat}, ${markerLon}`}
+                  value={formatDistance(distance)}
                   readOnly
                   className=" border mb-4 border-gray-300 w-full py-2"
                 />
@@ -135,7 +163,21 @@ const LocationForm = () => {
         </div>
         <div className=" col-span-1">
           <div className="my-6">
-            <h1 className=" text-4xl text-dark text-start">Leaderboard</h1>
+            <h1 className=" text-4xl text-dark text-start mb-5">Leaderboard</h1>
+            {guesses?.data.data && guesses.data.data.length > 0 ? (
+              <>
+                {guesses?.data.data.map((guess, index) => (
+                  <div key={index}>
+                    <div className=" mb-2.5">
+                      <GuessForm key={guess?.id} guess={guess} place={index} />
+                    </div>
+                    {/* <div className="w-100"></div> */}
+                  </div>
+                ))}
+              </>
+            ) : (
+              <p>No guesses yet</p>
+            )}
           </div>
         </div>
       </div>

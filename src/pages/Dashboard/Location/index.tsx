@@ -15,7 +15,7 @@ import authStore from 'stores/auth.store'
 import Layout from 'components/ui/Layout'
 import LocationForm from 'components/location/LocationForm'
 
-const Location: FC = () => {
+const LocationView: FC = () => {
   return (
     <Layout>
       <LocationForm />
@@ -23,4 +23,4 @@ const Location: FC = () => {
   )
 }
 
-export default Location
+export default LocationView

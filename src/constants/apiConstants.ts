@@ -12,4 +12,5 @@ export enum apiRoutes {
   GET_AVATAR_IMAGE = '/user/get/image',
   LOCATION = '/location',
   UPLOAD_LOCATION_IMAGE = '/location/upload',
+  GUESS = '/guess',
 }
