@@ -23,7 +23,7 @@ const GuessComponent: FC<Props> = ({ guess }) => {
     <Link to={`${routes.LOCATION}/${guess.location.id}`}>
       <div className=" relative">
         <img
-          className=" relative w-full h-48 object-cover"
+          className=" relative w-full h-48 md:h-60 object-cover"
           src={`${process.env.REACT_APP_API_URL}/files/${guess.location.avatar}`}
           alt="avatar"
         />

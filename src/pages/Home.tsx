@@ -1,19 +1,81 @@
 import Layout from 'components/ui/Layout'
 import { routes } from 'constants/routesConstants'
 import { GuessType } from 'models/guess'
-import { FC } from 'react'
-import { useQuery } from 'react-query'
+import { FC, useEffect, useState } from 'react'
+import { useInfiniteQuery, useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
 import GuessForm from 'components/guess/GuessForm'
 import GuessComponent from 'components/guess/GuessComponent'
+import { LocationType } from 'models/location'
+import LocationComponent from 'components/location/LocationComponent'
+import useMediaQuery from 'hooks/useMediaQuery'
 
 const Home: FC = () => {
-  const { data: guesses } = useQuery<{ data: { data: GuessType[] } }, Error>(
-    ['guesses', authStore.user?.id],
-    () => API.getGeuessByUser(authStore.user?.id!, 1),
+  const { isMobile } = useMediaQuery(769)
+  // const [guesses, setGuesses] = useState<GuessType[]>([])
+  // const [guessesPageNumber, setGuessesPageNumber] = useState(1)
+  const [locationsPageNumber, setLocationsPageNumber] = useState(1)
+  const [locationsTakeNumber, setLocationsTakeNumber] = useState(() => {
+    // console.log(isMobile)
+    if (isMobile) {
+      return 3
+    } else {
+      return 3
+    }
+  })
+  //
+  // const { data: guessesData, refetch: refetchGuesses } = useInfiniteQuery<
+  //   { data: { data: GuessType[] } },
+  //   Error
+  // >(
+  //   ['guesses', authStore.user?.id],
+  //   () => API.getGeuessByUser(authStore.user?.id!, guessesPageNumber), // Fetch initial page of guesses
+  //   {
+  //     // enabled: true,
+  //     // initialData: { data: { data: [] } },
+  //     keepPreviousData: true,
+  //   },
+  // )
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<
+      { data: { data: GuessType[]; meta: { total: number; page: number } } },
+      Error
+    >(
+      'guesses',
+      ({ pageParam = 1 }) =>
+        API.getGeuessByUser(authStore.user?.id!, pageParam),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          const currentPage = lastPage?.data.meta?.page || 1
+          const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
+          console.log(lastPage, lastPage?.data.meta?.page)
+
+          return currentPage < totalPages ? currentPage + 1 : undefined
+        },
+      },
+    )
+
+  const guesses = data?.pages.flatMap((page) => page.data.data) || []
+
+  // console.log(data?.pages)
+
+  const handleLoadMoreGuesses = () => {
+    fetchNextPage()
+  }
+
+  //LOCATIONS
+
+  const { data: locations } = useQuery<
+    { data: { data: LocationType[] } },
+    Error
+  >(
+    ['locations', authStore.user?.id],
+    () => API.getLocation(1, locationsTakeNumber),
     {
+      enabled: true,
       refetchOnWindowFocus: false, // Fetching is initially disabled
       keepPreviousData: true,
     },
@@ -33,26 +95,34 @@ const Home: FC = () => {
                 your personal records or set a new one!
               </p>
             </div>
-            <div className="col-span-full grid overflow-x-auto flex-nowrap mt-8 ">
-              {guesses?.data.data && guesses.data.data.length > 0 ? (
+            <div className="col-span-full grid md:grid-cols-3 gap-3 mt-8 ">
+              {guesses && guesses?.length > 0 ? (
                 <>
-                  {guesses?.data.data.map((guess, index) => (
-                    <div key={index}>
-                      <div className=" mb-2.5">
-                        <GuessComponent key={guess?.id} guess={guess} />
+                  {guesses.map((guess, index) => (
+                    <>
+                      {/* {console.log(guess)} */}
+
+                      <div key={index}>
+                        <div className=" mb-2.5">
+                          <GuessComponent key={guess.id} guess={guess} />
+                        </div>
                       </div>
-                      {/* <div className="w-100"></div> */}
-                    </div>
+                    </>
                   ))}
                 </>
               ) : (
-                <p>No guesses yet</p>
+                <p>You do not have any guesses yet</p>
               )}
             </div>
-            <div className="col-span-full my-10 hidden md:block">
-              <button className=" border border-primary text-primary px-5 py-1.5 rounded">
-                LOAD MORE
-              </button>
+            <div className="col-span-full my-10 md:block">
+              {hasNextPage && (
+                <button
+                  onClick={handleLoadMoreGuesses}
+                  className=" border border-primary text-primary px-5 py-1.5 rounded"
+                >
+                  LOAD MORE
+                </button>
+              )}
             </div>
             <div className="col-span-full justify-self-start grid mt-12">
               <h1 className=" font-normal text-4xl text-primary ">
@@ -63,43 +133,24 @@ const Home: FC = () => {
                 pressing on a picture.
               </p>
             </div>
-            <div className="col-span-full grid grid-cols-3 gap-2 mt-8">
-              <div className="relative col-span-full md:col-span-1">
-                <img
-                  src="images/lockedCard1.svg"
-                  alt="locekd Card"
-                  className=" relative top-0 left-0"
-                />
-                <img
-                  src="images/lock.svg"
-                  alt="locekd Card"
-                  className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
-                />
-              </div>
-              <div className="relative col-span-full md:col-span-1">
-                <img
-                  src="images/lockedCard2.svg"
-                  alt="locekd Card"
-                  className=" relative top-0 left-0"
-                />
-                <img
-                  src="images/lock.svg"
-                  alt="locekd Card"
-                  className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
-                />
-              </div>
-              <div className="relative col-span-full md:col-span-1">
-                <img
-                  src="images/lockedCard3.svg"
-                  alt="locekd Card"
-                  className=" relative top-0 left-0"
-                />
-                <img
-                  src="images/lock.svg"
-                  alt="locekd Card"
-                  className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
-                />
-              </div>
+            <div className="col-span-full grid md:grid-cols-3 gap-3 mt-8">
+              {locations?.data.data && locations.data.data.length > 0 ? (
+                <>
+                  {locations?.data.data.map((location, index) => (
+                    <div key={index}>
+                      <div className=" mb-2.5">
+                        <LocationComponent
+                          key={location?.id}
+                          location={location}
+                        />
+                      </div>
+                      {/* <div className="w-100"></div> */}
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <p>You do not have any guesses yet</p>
+              )}
             </div>
             <div className="col-span-full my-10">
               <button className=" border border-primary text-primary px-5 py-1.5 rounded">
