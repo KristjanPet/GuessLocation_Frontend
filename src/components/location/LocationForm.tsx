@@ -36,7 +36,7 @@ const LocationForm: FC = () => {
   //GET
   const { data: location } = useQuery<{ data: LocationType }, Error>(
     ['location', locationId],
-    () => API.getLocation(locationId!),
+    () => API.getLocationById(locationId!),
     {
       refetchOnWindowFocus: false, // Fetching is initially disabled
       keepPreviousData: true,

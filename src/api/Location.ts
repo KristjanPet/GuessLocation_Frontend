@@ -6,7 +6,7 @@ import {
   createLocationType,
 } from 'models/location'
 
-export const getLocation = async (id: string) =>
+export const getLocationById = async (id: string) =>
   apiRequest<undefined, LocationType>('get', `${apiRoutes.LOCATION}/${id}`)
 
 export const createLocation = async (data: createLocationType) =>

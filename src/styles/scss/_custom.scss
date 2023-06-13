@@ -111,3 +111,11 @@ a {
 .bronze {
   background: linear-gradient(41.75deg, #956956 22.78%, #d79376 87.18%);
 }
+
+.green_background {
+  background: linear-gradient(
+    90deg,
+    rgba(102, 159, 137, 0.6) 50%,
+    rgba(159, 193, 129, 0.6) 128%
+  );
+}

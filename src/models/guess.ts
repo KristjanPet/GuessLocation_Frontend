@@ -1,4 +1,5 @@
 import { UserType } from './auth'
+import { LocationType } from './location'
 
 export type GuessType = {
   id: string
@@ -6,6 +7,7 @@ export type GuessType = {
   lat: number
   distance: number
   user: UserType
+  location: LocationType
   created_at: Date
 }
 

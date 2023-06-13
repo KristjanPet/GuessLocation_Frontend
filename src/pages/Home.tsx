@@ -1,10 +1,24 @@
 import Layout from 'components/ui/Layout'
 import { routes } from 'constants/routesConstants'
+import { GuessType } from 'models/guess'
 import { FC } from 'react'
+import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import authStore from 'stores/auth.store'
+import * as API from 'api/Api'
+import GuessForm from 'components/guess/GuessForm'
+import GuessComponent from 'components/guess/GuessComponent'
 
 const Home: FC = () => {
+  const { data: guesses } = useQuery<{ data: { data: GuessType[] } }, Error>(
+    ['guesses', authStore.user?.id],
+    () => API.getGeuessByUser(authStore.user?.id!, 1),
+    {
+      refetchOnWindowFocus: false, // Fetching is initially disabled
+      keepPreviousData: true,
+    },
+  )
+
   return (
     <Layout>
       <div className="p-4 mb-4 grid grid-cols-6 justify-items-center">
@@ -19,43 +33,21 @@ const Home: FC = () => {
                 your personal records or set a new one!
               </p>
             </div>
-            <div className="col-span-full flex overflow-x-auto flex-nowrap mt-8 ">
-              <div className="relative col-span-full md:col-span-1">
-                <img
-                  src="images/lockedCard1.svg"
-                  alt="locekd Card"
-                  className=" relative top-0 left-0"
-                />
-                <img
-                  src="images/lock.svg"
-                  alt="locekd Card"
-                  className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
-                />
-              </div>
-              <div className="relative col-span-full md:col-span-1">
-                <img
-                  src="images/lockedCard2.svg"
-                  alt="locekd Card"
-                  className=" relative top-0 left-0"
-                />
-                <img
-                  src="images/lock.svg"
-                  alt="locekd Card"
-                  className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
-                />
-              </div>
-              <div className="relative col-span-full md:col-span-1">
-                <img
-                  src="images/lockedCard3.svg"
-                  alt="locekd Card"
-                  className=" relative top-0 left-0"
-                />
-                <img
-                  src="images/lock.svg"
-                  alt="locekd Card"
-                  className=" absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2"
-                />
-              </div>
+            <div className="col-span-full grid overflow-x-auto flex-nowrap mt-8 ">
+              {guesses?.data.data && guesses.data.data.length > 0 ? (
+                <>
+                  {guesses?.data.data.map((guess, index) => (
+                    <div key={index}>
+                      <div className=" mb-2.5">
+                        <GuessComponent key={guess?.id} guess={guess} />
+                      </div>
+                      {/* <div className="w-100"></div> */}
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <p>No guesses yet</p>
+              )}
             </div>
             <div className="col-span-full my-10 hidden md:block">
               <button className=" border border-primary text-primary px-5 py-1.5 rounded">
