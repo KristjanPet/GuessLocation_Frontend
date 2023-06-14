@@ -12,9 +12,15 @@ import Button from 'react-bootstrap/Button'
 import { StatusCode } from 'constants/errorConstants'
 import { UserType } from 'models/auth'
 import authStore from 'stores/auth.store'
+import Layout from 'components/ui/Layout'
+import LocationForm from 'components/location/LocationForm'
 
-const DashboardUsers: FC = () => {
-  return <DashboardLayout>Location</DashboardLayout>
+const LocationView: FC = () => {
+  return (
+    <Layout>
+      <LocationForm />
+    </Layout>
+  )
 }
 
-export default DashboardUsers
+export default LocationView

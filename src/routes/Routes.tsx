@@ -3,7 +3,6 @@ import { Route, RouteProps, Routes as Switch } from 'react-router-dom'
 
 import PrivateRoute from './PrivateRoute'
 import RestrictedRoute from './RestrictedRoute'
-import LocationAdd from 'pages/Dashboard/Location/Add'
 
 export enum RouteType {
   PUBLIC,
@@ -66,17 +65,17 @@ export const AppRoutes: AppRoute[] = [
   },
   {
     type: RouteType.PRIVATE,
-    path: '/dashboard/location',
+    path: '/dashboard/location/:locationId',
     children: <DashboardLocation />,
   },
   {
     type: RouteType.PRIVATE,
     path: '/dashboard/location/add',
-    children: <LocationAdd />,
+    children: <DashboardLocationAdd />,
   },
   {
     type: RouteType.PRIVATE,
-    path: '/dashboard/location/edit',
+    path: '/dashboard/location/edit/:locationId',
     children: <DashboardLocationEdit />,
   },
   {

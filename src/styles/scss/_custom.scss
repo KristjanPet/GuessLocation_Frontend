@@ -100,7 +100,22 @@ a {
   display: none;
 }
 
-.mapboxgl-canvas {
-  width: 21.5rem;
-  height: 12.18rem;
+.gold {
+  background: linear-gradient(41.75deg, #fe7f2d 22.78%, #fcca46 87.18%);
+}
+
+.silver {
+  background: linear-gradient(41.75deg, #d8d8d8 22.78%, #999999 87.18%);
+}
+
+.bronze {
+  background: linear-gradient(41.75deg, #956956 22.78%, #d79376 87.18%);
+}
+
+.green_background {
+  background: linear-gradient(
+    90deg,
+    rgba(102, 159, 137, 0.6) 50%,
+    rgba(159, 193, 129, 0.6) 128%
+  );
 }

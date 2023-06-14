@@ -5,4 +5,7 @@ export enum routes {
   HOME = '/',
   DASHBOARD_PREFIX = '/dashboard',
   PROFILE = '/profile',
+  ADD_LOCATION = '/dashboard/location/add',
+  EDIT_LOCATION = '/dashboard/location/edit',
+  LOCATION = '/dashboard/location',
 }
