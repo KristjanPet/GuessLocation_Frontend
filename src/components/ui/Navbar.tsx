@@ -39,14 +39,16 @@ const Navbar: FC = () => {
           {isMobile ? (
             <>
               {authStore.user && (
-                <div className={'bg-primary rounded-full p-3'}>
-                  <img
-                    src="/images/addIcon.svg"
-                    alt="Add"
-                    width={15}
-                    height={15}
-                  />
-                </div>
+                <Link className="" to={routes.ADD_LOCATION}>
+                  <div className={'bg-primary rounded-full p-3'}>
+                    <img
+                      src="/images/addIcon.svg"
+                      alt="Add"
+                      width={15}
+                      height={15}
+                    />
+                  </div>
+                </Link>
               )}
 
               <Link className="px-2 " to={routes.HOME}>

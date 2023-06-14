@@ -31,7 +31,7 @@ const Home: FC = () => {
     >(
       'guesses',
       ({ pageParam = 1 }) =>
-        API.getGeuessByUser(authStore.user?.id!, pageParam),
+        API.getGeuessByUser(authStore.user?.id!, pageParam, 3),
       {
         getNextPageParam: (lastPage, allPages) => {
           const currentPage = lastPage?.data.meta?.page || 1
@@ -52,19 +52,6 @@ const Home: FC = () => {
   }
 
   //LOCATIONS
-
-  // const { data: locations } = useQuery<
-  //   { data: { data: LocationType[] } },
-  //   Error
-  // >(
-  //   ['locations', authStore.user?.id],
-  //   () => API.getLocation(1, locationsTakeNumber),
-  //   {
-  //     enabled: true,
-  //     refetchOnWindowFocus: false, // Fetching is initially disabled
-  //     keepPreviousData: true,
-  //   },
-  // )
 
   const {
     data: locationData,

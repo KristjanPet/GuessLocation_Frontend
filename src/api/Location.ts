@@ -7,7 +7,7 @@ import {
 } from 'models/location'
 
 export const getLocation = async (page: number, take: number) =>
-  apiRequest<undefined, LocationType>(
+  apiRequest<undefined, LocationType[]>(
     'get',
     `${apiRoutes.LOCATION}?page=${page}&take=${take}`,
   )

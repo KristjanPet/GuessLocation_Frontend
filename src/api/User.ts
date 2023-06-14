@@ -10,6 +10,7 @@ import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
 import { EmailUserFields } from 'hooks/react-hook-form/useEmail'
 import { PasswordUserFields } from 'hooks/react-hook-form/usePassword'
+import { LocationType } from 'models/location'
 
 export const fetchUser = async () =>
   apiRequest<undefined, UserType>('get', apiRoutes.FETCH_USER)
@@ -37,6 +38,12 @@ export const uploadAvatar = async (formData: FormData, id: string) =>
     'post',
     `${apiRoutes.UPLOAD_AVATAR_IMAGE}/${id}`,
     formData,
+  )
+
+export const getLocationsOfUser = async (page: number, take: number) =>
+  apiRequest<undefined, LocationType[]>(
+    'get',
+    `${apiRoutes.USERS_PREFIX}/location?page=${page}&take=${take}`,
   )
 
 // export const updateUser = async (data: UpdateUserFields, id: string) =>
