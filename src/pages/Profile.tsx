@@ -23,12 +23,12 @@ const Profile: FC = () => {
     >(
       'guesses',
       ({ pageParam = 1 }) =>
-        API.getGeuessByUser(authStore.user?.id!, pageParam, 4),
+        API.getGeuessByUser(authStore.user?.id!, pageParam, 3),
       {
         getNextPageParam: (lastPage, allPages) => {
           const currentPage = lastPage?.data.meta?.page || 1
           const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-          console.log(lastPage, lastPage?.data.meta?.page)
+          // console.log(lastPage, lastPage?.data.meta?.page)
 
           return currentPage < totalPages ? currentPage + 1 : undefined
         },
@@ -52,11 +52,11 @@ const Profile: FC = () => {
   } = useInfiniteQuery<
     { data: { data: LocationType[]; meta: { total: number; page: number } } },
     Error
-  >('locations', ({ pageParam = 1 }) => API.getLocationsOfUser(pageParam, 4), {
+  >('locations', ({ pageParam = 1 }) => API.getLocationsOfUser(pageParam, 3), {
     getNextPageParam: (lastPage, allPages) => {
       const currentPage = lastPage?.data.meta?.page || 1
       const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-      console.log(lastPage, lastPage?.data.meta?.page)
+      // console.log(lastPage, lastPage?.data.meta?.page)
 
       return currentPage < totalPages ? currentPage + 1 : undefined
     },
@@ -91,7 +91,7 @@ const Profile: FC = () => {
           </p>
         </div>
         <p className="text-primary text-2xl">My best guesses</p>
-        <div className="col-span-full grid md:grid-cols-4 gap-3 mt-8 ">
+        <div className="col-span-full grid md:grid-cols-3 gap-3 mt-8 ">
           {guesses && guesses?.length > 0 ? (
             <>
               {guesses.map((guess, index) => (
@@ -125,7 +125,7 @@ const Profile: FC = () => {
               {locations?.map((location, index) => (
                 <div key={index}>
                   <div className=" mb-2.5">
-                    <LocationComponent key={location?.id} location={location} />
+                    <LocationComponent key={location?.id} data={location} />
                   </div>
                   {/* <div className="w-100"></div> */}
                 </div>
@@ -135,7 +135,7 @@ const Profile: FC = () => {
             <p>You do not have any guesses yet</p>
           )}
         </div>
-        <div className="col-span-full my-10">
+        <div className="col-span-full my-10 mx-auto">
           {hasNextLocationPage && (
             <button
               onClick={handleLoadMoreLocations}

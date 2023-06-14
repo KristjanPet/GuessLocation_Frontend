@@ -136,10 +136,7 @@ const Home: FC = () => {
                   {locations?.map((location, index) => (
                     <div key={index}>
                       <div className=" mb-2.5">
-                        <LocationComponent
-                          key={location?.id}
-                          location={location}
-                        />
+                        <LocationComponent key={location?.id} data={location} />
                       </div>
                       {/* <div className="w-100"></div> */}
                     </div>
