@@ -14,9 +14,7 @@ import useMediaQuery from 'hooks/useMediaQuery'
 
 const Home: FC = () => {
   const { isMobile } = useMediaQuery(769)
-  // const [guesses, setGuesses] = useState<GuessType[]>([])
-  // const [guessesPageNumber, setGuessesPageNumber] = useState(1)
-  const [locationsPageNumber, setLocationsPageNumber] = useState(1)
+
   const [locationsTakeNumber, setLocationsTakeNumber] = useState(() => {
     // console.log(isMobile)
     if (isMobile) {
@@ -25,19 +23,6 @@ const Home: FC = () => {
       return 3
     }
   })
-  //
-  // const { data: guessesData, refetch: refetchGuesses } = useInfiniteQuery<
-  //   { data: { data: GuessType[] } },
-  //   Error
-  // >(
-  //   ['guesses', authStore.user?.id],
-  //   () => API.getGeuessByUser(authStore.user?.id!, guessesPageNumber), // Fetch initial page of guesses
-  //   {
-  //     // enabled: true,
-  //     // initialData: { data: { data: [] } },
-  //     keepPreviousData: true,
-  //   },
-  // )
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<
@@ -68,18 +53,45 @@ const Home: FC = () => {
 
   //LOCATIONS
 
-  const { data: locations } = useQuery<
-    { data: { data: LocationType[] } },
+  // const { data: locations } = useQuery<
+  //   { data: { data: LocationType[] } },
+  //   Error
+  // >(
+  //   ['locations', authStore.user?.id],
+  //   () => API.getLocation(1, locationsTakeNumber),
+  //   {
+  //     enabled: true,
+  //     refetchOnWindowFocus: false, // Fetching is initially disabled
+  //     keepPreviousData: true,
+  //   },
+  // )
+
+  const {
+    data: locationData,
+    fetchNextPage: fetchNextLocationPage,
+    hasNextPage: hasNextLocationPage,
+  } = useInfiniteQuery<
+    { data: { data: LocationType[]; meta: { total: number; page: number } } },
     Error
   >(
-    ['locations', authStore.user?.id],
-    () => API.getLocation(1, locationsTakeNumber),
+    'locations',
+    ({ pageParam = 1 }) => API.getLocation(pageParam, locationsTakeNumber),
     {
-      enabled: true,
-      refetchOnWindowFocus: false, // Fetching is initially disabled
-      keepPreviousData: true,
+      getNextPageParam: (lastPage, allPages) => {
+        const currentPage = lastPage?.data.meta?.page || 1
+        const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
+        console.log(lastPage, lastPage?.data.meta?.page)
+
+        return currentPage < totalPages ? currentPage + 1 : undefined
+      },
     },
   )
+
+  const locations = locationData?.pages.flatMap((page) => page.data.data) || []
+
+  const handleLoadMoreLocations = () => {
+    fetchNextLocationPage()
+  }
 
   return (
     <Layout>
@@ -100,8 +112,6 @@ const Home: FC = () => {
                 <>
                   {guesses.map((guess, index) => (
                     <>
-                      {/* {console.log(guess)} */}
-
                       <div key={index}>
                         <div className=" mb-2.5">
                           <GuessComponent key={guess.id} guess={guess} />
@@ -134,9 +144,9 @@ const Home: FC = () => {
               </p>
             </div>
             <div className="col-span-full grid md:grid-cols-3 gap-3 mt-8">
-              {locations?.data.data && locations.data.data.length > 0 ? (
+              {locations && locations?.length > 0 ? (
                 <>
-                  {locations?.data.data.map((location, index) => (
+                  {locations?.map((location, index) => (
                     <div key={index}>
                       <div className=" mb-2.5">
                         <LocationComponent
@@ -153,9 +163,14 @@ const Home: FC = () => {
               )}
             </div>
             <div className="col-span-full my-10">
-              <button className=" border border-primary text-primary px-5 py-1.5 rounded">
-                LOAD MORE
-              </button>
+              {hasNextLocationPage && (
+                <button
+                  onClick={handleLoadMoreLocations}
+                  className=" border border-primary text-primary px-5 py-1.5 rounded"
+                >
+                  LOAD MORE
+                </button>
+              )}
             </div>
           </>
         ) : (
@@ -168,7 +183,7 @@ const Home: FC = () => {
                 Geotagger is website that allows you to post picture and tag it
                 on the map. Other user than try to locate it via Google Maps.{' '}
               </p>
-              <NavLink to={routes.SIGNUP} className="mt-12">
+              <NavLink to={routes.LOGIN} className="mt-12">
                 <button className="bg-primary rounded text-white px-10 py-2">
                   SIGN IN
                 </button>
