@@ -3,35 +3,35 @@ import * as API from 'api/Api'
 import { useForm } from 'react-hook-form'
 import { MdClose } from 'react-icons/md'
 import Popup from 'reactjs-popup'
+import { StatusCode } from 'constants/errorConstants'
+import { routes } from 'constants/routesConstants'
+import { useNavigate } from 'react-router-dom'
+import authStore from 'stores/auth.store'
 
 type props = {
   location_id: string
 }
 
 const DeleteLocationForm: FC<props> = ({ location_id }) => {
+  const navigate = useNavigate()
   const { handleSubmit } = useForm()
 
-  const [apiError, setApiError] = useState('')
-  const [showError, setShowError] = useState(false)
   const [windowOpen, setWindowOpen] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [errorOpen, setErrorOpen] = useState(false)
 
   const onSubmit = async () => {
-    //   const response = await API.deleteQuote(location_id)
-    //   if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
-    //     setApiError(response.data.message)
-    //     setShowError(true)
-    //   } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
-    //     setApiError(response.data.message)
-    //     setShowError(true)
-    //   } else {
-    //     setWindowOpen(false)
-    //     setConfirmOpen(true)
-    //   }
-    console.log('KLIČE SE SUBMIT')
-
-    setWindowOpen(false)
-    setConfirmOpen(true)
+    const response = await API.deleteLocation(location_id)
+    if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
+      setWindowOpen(false)
+      setErrorOpen(true)
+    } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
+      setWindowOpen(false)
+      setErrorOpen(true)
+    } else {
+      setWindowOpen(false)
+      setConfirmOpen(true)
+    }
   }
 
   return (
@@ -98,6 +98,33 @@ const DeleteLocationForm: FC<props> = ({ location_id }) => {
               className="text-white bg-primary px-8 py-2 rounded"
               type="button"
               onClick={() => setConfirmOpen(false)}
+            >
+              CLOSE
+            </button>
+          </div>
+        </div>
+      </Popup>
+
+      {/* ERROR */}
+      <Popup modal nested className=" relative" open={errorOpen}>
+        <div
+          className=" fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full z-10"
+          onClick={() => setErrorOpen(false)}
+        ></div>
+
+        <div className=" flex flex-col p-4 gap-6 items-center absolute top-1/2 left-1/2 w-72 md:w-96 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl z-20">
+          <p className=" text-2xl  text-center">
+            Something went wrong while deliting your location, please try again.
+            later
+          </p>
+
+          <div className="d-flex justify-content-center w-100 my-2">
+            <button
+              className="text-white bg-primary px-8 py-2 rounded"
+              type="button"
+              onClick={() => {
+                setErrorOpen(false)
+              }}
             >
               CLOSE
             </button>

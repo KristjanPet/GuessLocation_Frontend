@@ -24,3 +24,6 @@ export const updateLocation = async (formData: FormData, id: string) =>
     `${apiRoutes.UPLOAD_LOCATION_IMAGE}/${id}`,
     formData,
   )
+
+export const deleteLocation = async (id: string) =>
+  apiRequest<undefined, LocationType>('delete', `${apiRoutes.LOCATION}/${id}`)
