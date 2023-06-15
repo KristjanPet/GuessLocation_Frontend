@@ -273,7 +273,7 @@ const SettingsForm: FC = () => {
               <div className="">
                 <button
                   className=" text-dark "
-                  onClick={() => setWindowOpen(false)}
+                  onClick={() => closeAll()}
                   type="button"
                 >
                   Cancle
@@ -416,7 +416,7 @@ const SettingsForm: FC = () => {
               <div className="">
                 <button
                   className=" text-dark "
-                  onClick={() => setWindowOpen(false)}
+                  onClick={() => closeAll()}
                   type="button"
                 >
                   Cancle
@@ -495,7 +495,7 @@ const SettingsForm: FC = () => {
               <div className="">
                 <button
                   className=" text-dark "
-                  onClick={() => setWindowOpen(false)}
+                  onClick={() => closeAll()}
                   type="button"
                 >
                   Cancle
