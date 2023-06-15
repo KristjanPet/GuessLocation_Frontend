@@ -11,6 +11,7 @@ import Avatar from 'react-avatar'
 import useMediaQuery from 'hooks/useMediaQuery'
 import NavbarMenuForm from './NavbarMenuForm'
 import SettingsForm from 'components/user/SettingsForm'
+import LogForm from 'components/user/LogForm'
 // import MobileMenuForm from '../user/MobileMenuForm'
 
 const Navbar: FC = () => {
@@ -79,6 +80,11 @@ const Navbar: FC = () => {
                       <li className=" text-dark">
                         <SettingsForm />
                       </li>
+                      {authStore.user.admin && (
+                        <li className=" text-dark">
+                          <LogForm />
+                        </li>
+                      )}
                       <li className="text-dark">
                         <button
                           onClick={signout}

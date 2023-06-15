@@ -9,10 +9,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
-// import SettingsForm from './SettingsForm'
-import ToastContainer from 'react-bootstrap/ToastContainer'
-import Toast from 'react-bootstrap/Toast'
 import SettingsForm from 'components/user/SettingsForm'
+import LogForm from 'components/user/LogForm'
 
 const NavbarMenuForm: FC = () => {
   const navigate = useNavigate()
@@ -120,6 +118,13 @@ const NavbarMenuForm: FC = () => {
                 <SettingsForm />
                 <RiArrowRightSLine size={24} color="black" />
               </div>
+              {authStore.user.admin && (
+                <div className="flex justify-between items-center my-6 text-2xl text-dark">
+                  <LogForm />
+                  <RiArrowRightSLine size={24} color="black" />
+                </div>
+              )}
+
               <div
                 className="flex justify-between items-center my-6"
                 onClick={signout}
