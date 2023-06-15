@@ -8,10 +8,14 @@ export const getGeuess = async (locationId: string) =>
     `${apiRoutes.GUESS}/${locationId}/location?page=${1}&take=${13}`,
   )
 
-export const getGeuessByUser = async (locationId: string, page: number) =>
+export const getGeuessByUser = async (
+  locationId: string,
+  page: number,
+  take: number,
+) =>
   apiRequest<undefined, GuessType[]>(
     'get',
-    `${apiRoutes.GUESS}/${locationId}/user?page=${page}&take=${3}`,
+    `${apiRoutes.GUESS}/${locationId}/user?page=${page}&take=${take}`,
   )
 
 export const createGuess = async (data: createGuessType, locationId: string) =>

@@ -71,7 +71,7 @@ const LocationForm: FC = () => {
       setShowError(true)
       setApiError(fileResponse.data.message)
     } else {
-      console.log(fileResponse.data)
+      // console.log(fileResponse.data)
       setDistance(fileResponse.data.distance)
       refetchGuesses()
     }

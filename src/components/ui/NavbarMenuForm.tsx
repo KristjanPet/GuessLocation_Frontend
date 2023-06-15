@@ -9,9 +9,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
-// import SettingsForm from './SettingsForm'
-import ToastContainer from 'react-bootstrap/ToastContainer'
-import Toast from 'react-bootstrap/Toast'
+import SettingsForm from 'components/user/SettingsForm'
+import LogForm from 'components/user/LogForm'
 
 const NavbarMenuForm: FC = () => {
   const navigate = useNavigate()
@@ -55,19 +54,27 @@ const NavbarMenuForm: FC = () => {
       />
       {/* SIGN OUT SETTINGS */}
       <Popup modal nested open={windowOpen}>
-        <div className="overlay" onClick={toggleWindow}></div>
+        <div
+          className=" fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full z-10"
+          onClick={toggleWindow}
+        />
 
-        <div className={`menu-box row ${animation ? '' : 'closing'}`}>
-          <div className="col mb-2">
-            {' '}
-            <MdClose size={24} className="text-orange" onClick={toggleWindow} />
+        <div
+          className={`${
+            animation ? '' : 'closing'
+          } fixed top-0 left-0 w-full bg-white z-20 p-6`}
+        >
+          <div className="flex justify-end mb-5">
+            <MdClose
+              size={24}
+              className="text-primary"
+              onClick={toggleWindow}
+            />
           </div>
-          <div className="w-100"></div>
           {authStore.user ? (
             <>
               <Link
-                className="text-decoration-none"
-                // to={`${routes.PROFILE}/users/edit`}
+                className=""
                 to={`${routes.PROFILE}/${authStore.user.id}`}
                 state={{
                   id: authStore.user?.id,
@@ -78,7 +85,7 @@ const NavbarMenuForm: FC = () => {
                   isActiveUser: true,
                 }}
               >
-                <div className="col d-flex align-items-center mb-3">
+                <div className="flex items-center mb-3">
                   <Avatar
                     className="navbar-avatar"
                     round
@@ -93,74 +100,70 @@ const NavbarMenuForm: FC = () => {
                         : authStore.user?.email
                     }
                   />
-                  <p className="m-0 font-size-24 px-3 text-dark">
+                  <p className="ml-4 text-2xl px-3 text-dark">
                     {authStore.user.first_name} {authStore.user.last_name}
                   </p>
                 </div>
               </Link>
               <Link to={routes.HOME} className="text-decoration-none mb-3">
                 <div
-                  className="col d-flex align-items-center justify-content-between mb-2"
+                  className="flex justify-between items-center my-6"
                   onClick={() => routes.HOME}
                 >
-                  <p className="m-0 font-size-24 text-dark">Home</p>
+                  <p className="m-0 text-2xl text-dark">Home</p>
                   <RiArrowRightSLine size={24} color="black" />
                 </div>
               </Link>
-              <div className="col d-flex align-items-center justify-content-between mb-2">
-                {/* <SettingsForm navbarClass={'text-dark font-size-24 p-0'} /> */}
+              <div className="flex justify-between items-center my-6 text-2xl text-dark">
+                <SettingsForm />
                 <RiArrowRightSLine size={24} color="black" />
               </div>
-              <div className="w-100"></div>
+              {authStore.user.admin && (
+                <div className="flex justify-between items-center my-6 text-2xl text-dark">
+                  <LogForm />
+                  <RiArrowRightSLine size={24} color="black" />
+                </div>
+              )}
+
               <div
-                className="col d-flex align-items-center justify-content-between mb-2"
+                className="flex justify-between items-center my-6"
                 onClick={signout}
               >
-                <p className="m-0 font-size-24 text-orange">Logout</p>
-                <RiArrowRightSLine size={24} className="text-orange" />
+                <p className="m-0 text-2xl text-primary">Logout</p>
+                <RiArrowRightSLine size={24} className="text-primary" />
               </div>
             </>
           ) : (
             <>
-              <Link to={routes.HOME} className="text-decoration-none mb-3">
+              <Link to={routes.HOME} className="text-decoration-none">
                 <div
-                  className="col d-flex align-items-center justify-content-between mb-2"
+                  className="flex justify-between items-center my-6"
                   onClick={() => routes.HOME}
                 >
-                  <p className="m-0 font-size-24 text-dark">Home</p>
-                  <RiArrowRightSLine size={24} color="black" />
+                  <p className=" text-2xl text-dark">Home</p>
+                  <RiArrowRightSLine size={24} color="text-dark" />
                 </div>
               </Link>
-              <div className="w-100"></div>
-              <div className="col">
-                <Link to={routes.SIGNUP} className="text-decoration-none">
-                  <button className="w-100 signup-button-litlle">
-                    Sign up
-                  </button>
+              <div className=" my-8">
+                <Link
+                  to={routes.SIGNUP}
+                  className=" bg-primary text-white py-2 rounded"
+                >
+                  <button className=" w-full">SIGN UP</button>
                 </Link>
               </div>
-              <div className="w-100"></div>
-              <div className="col">
-                <Link to={routes.LOGIN} className="text-decoration-none">
-                  <button className="w-100 login-button-litlle">Login</button>
+              <div className="">
+                <Link
+                  to={routes.LOGIN}
+                  className=" text-primary border border-primary py-2 rounded"
+                >
+                  <button className="w-full">SIGN IN</button>
                 </Link>
               </div>
             </>
           )}
         </div>
       </Popup>
-      {showError && (
-        <ToastContainer className="p-3" position="top-end">
-          <Toast onClose={() => setShowError(false)} show={showError}>
-            <Toast.Header>
-              <strong className="me-suto text-danger">Error</strong>
-            </Toast.Header>
-            <Toast.Body className="text-danger" bg-light>
-              {apiError}
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
     </>
   )
 }

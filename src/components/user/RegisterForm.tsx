@@ -46,7 +46,7 @@ const LoginForm: FC = () => {
         email: data.email,
         password: data.password,
       })
-      console.log(loginResponse.data)
+      // console.log(loginResponse.data)
 
       if (loginResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
         setApiError(loginResponse.data.message)

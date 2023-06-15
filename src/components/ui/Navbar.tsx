@@ -10,6 +10,8 @@ import Avatar from 'react-avatar'
 // import SettingsForm from 'components/user/SettingsForm'
 import useMediaQuery from 'hooks/useMediaQuery'
 import NavbarMenuForm from './NavbarMenuForm'
+import SettingsForm from 'components/user/SettingsForm'
+import LogForm from 'components/user/LogForm'
 // import MobileMenuForm from '../user/MobileMenuForm'
 
 const Navbar: FC = () => {
@@ -39,14 +41,16 @@ const Navbar: FC = () => {
           {isMobile ? (
             <>
               {authStore.user && (
-                <div className={'bg-primary rounded-full p-3'}>
-                  <img
-                    src="/images/addIcon.svg"
-                    alt="Add"
-                    width={15}
-                    height={15}
-                  />
-                </div>
+                <Link className="" to={routes.ADD_LOCATION}>
+                  <div className={'bg-primary rounded-full p-3'}>
+                    <img
+                      src="/images/addIcon.svg"
+                      alt="Add"
+                      width={15}
+                      height={15}
+                    />
+                  </div>
+                </Link>
               )}
 
               <Link className="px-2 " to={routes.HOME}>
@@ -74,9 +78,13 @@ const Navbar: FC = () => {
                         <NavLink to={routes.HOME}>Home</NavLink>
                       </li>
                       <li className=" text-dark">
-                        {/* <SettingsForm /> */}
-                        Profile settings
+                        <SettingsForm />
                       </li>
+                      {authStore.user.admin && (
+                        <li className=" text-dark">
+                          <LogForm />
+                        </li>
+                      )}
                       <li className="text-dark">
                         <button
                           onClick={signout}

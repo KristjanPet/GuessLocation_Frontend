@@ -31,12 +31,12 @@ const Home: FC = () => {
     >(
       'guesses',
       ({ pageParam = 1 }) =>
-        API.getGeuessByUser(authStore.user?.id!, pageParam),
+        API.getGeuessByUser(authStore.user?.id!, pageParam, 3),
       {
         getNextPageParam: (lastPage, allPages) => {
           const currentPage = lastPage?.data.meta?.page || 1
           const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-          console.log(lastPage, lastPage?.data.meta?.page)
+          // console.log(lastPage, lastPage?.data.meta?.page)
 
           return currentPage < totalPages ? currentPage + 1 : undefined
         },
@@ -53,19 +53,6 @@ const Home: FC = () => {
 
   //LOCATIONS
 
-  // const { data: locations } = useQuery<
-  //   { data: { data: LocationType[] } },
-  //   Error
-  // >(
-  //   ['locations', authStore.user?.id],
-  //   () => API.getLocation(1, locationsTakeNumber),
-  //   {
-  //     enabled: true,
-  //     refetchOnWindowFocus: false, // Fetching is initially disabled
-  //     keepPreviousData: true,
-  //   },
-  // )
-
   const {
     data: locationData,
     fetchNextPage: fetchNextLocationPage,
@@ -80,7 +67,7 @@ const Home: FC = () => {
       getNextPageParam: (lastPage, allPages) => {
         const currentPage = lastPage?.data.meta?.page || 1
         const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-        console.log(lastPage, lastPage?.data.meta?.page)
+        // console.log(lastPage, lastPage?.data.meta?.page)
 
         return currentPage < totalPages ? currentPage + 1 : undefined
       },
@@ -149,10 +136,7 @@ const Home: FC = () => {
                   {locations?.map((location, index) => (
                     <div key={index}>
                       <div className=" mb-2.5">
-                        <LocationComponent
-                          key={location?.id}
-                          location={location}
-                        />
+                        <LocationComponent key={location?.id} data={location} />
                       </div>
                       {/* <div className="w-100"></div> */}
                     </div>
