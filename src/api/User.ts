@@ -4,7 +4,7 @@ import { apiRoutes } from 'constants/apiConstants'
 // } from 'hooks/react-hook-form/useCreateUpdateUser'
 // import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 // import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
-import { UserType } from 'models/auth'
+import { UpdatePasswordFields, UpdateUserFields, UserType } from 'models/auth'
 import { apiRequest } from './Api'
 import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
@@ -46,9 +46,11 @@ export const getLocationsOfUser = async (page: number, take: number) =>
     `${apiRoutes.USERS_PREFIX}/location?page=${page}&take=${take}`,
   )
 
-// export const updateUser = async (data: UpdateUserFields, id: string) =>
-//   apiRequest<UpdateUserFields, void>(
-//     'patch',
-//     `${apiRoutes.USERS_PREFIX}/${id}`,
-//     data,
-//   )
+export const updateUser = async (
+  data: UpdateUserFields | UpdatePasswordFields,
+) =>
+  apiRequest<UpdateUserFields | UpdatePasswordFields, void>(
+    'patch',
+    `${apiRoutes.USERS_PREFIX}/update-user`,
+    data,
+  )

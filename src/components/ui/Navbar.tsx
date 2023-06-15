@@ -10,6 +10,7 @@ import Avatar from 'react-avatar'
 // import SettingsForm from 'components/user/SettingsForm'
 import useMediaQuery from 'hooks/useMediaQuery'
 import NavbarMenuForm from './NavbarMenuForm'
+import SettingsForm from 'components/user/SettingsForm'
 // import MobileMenuForm from '../user/MobileMenuForm'
 
 const Navbar: FC = () => {
@@ -76,8 +77,7 @@ const Navbar: FC = () => {
                         <NavLink to={routes.HOME}>Home</NavLink>
                       </li>
                       <li className=" text-dark">
-                        {/* <SettingsForm /> */}
-                        Profile settings
+                        <SettingsForm />
                       </li>
                       <li className="text-dark">
                         <button

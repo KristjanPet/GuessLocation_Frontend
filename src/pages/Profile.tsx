@@ -71,9 +71,9 @@ const Profile: FC = () => {
   return (
     <Layout>
       <div className="grid">
-        <div className="flex items-center gap-6 mb-4">
+        <div className="flex items-center gap-6 mb-4 ">
           <Avatar
-            className=" w-16"
+            className=" "
             round
             src={
               authStore.user?.avatar

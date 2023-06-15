@@ -110,7 +110,7 @@ const DeleteLocationForm: FC<props> = ({ location_id }) => {
         <div
           className=" fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full z-10"
           onClick={() => setErrorOpen(false)}
-        ></div>
+        />
 
         <div className=" flex flex-col p-4 gap-6 items-center absolute top-1/2 left-1/2 w-72 md:w-96 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl z-20">
           <p className=" text-2xl  text-center">

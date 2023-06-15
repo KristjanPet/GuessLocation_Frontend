@@ -36,7 +36,7 @@ const Home: FC = () => {
         getNextPageParam: (lastPage, allPages) => {
           const currentPage = lastPage?.data.meta?.page || 1
           const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-          console.log(lastPage, lastPage?.data.meta?.page)
+          // console.log(lastPage, lastPage?.data.meta?.page)
 
           return currentPage < totalPages ? currentPage + 1 : undefined
         },
@@ -67,7 +67,7 @@ const Home: FC = () => {
       getNextPageParam: (lastPage, allPages) => {
         const currentPage = lastPage?.data.meta?.page || 1
         const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-        console.log(lastPage, lastPage?.data.meta?.page)
+        // console.log(lastPage, lastPage?.data.meta?.page)
 
         return currentPage < totalPages ? currentPage + 1 : undefined
       },
