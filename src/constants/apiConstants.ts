@@ -13,4 +13,5 @@ export enum apiRoutes {
   LOCATION = '/location',
   UPLOAD_LOCATION_IMAGE = '/location/upload',
   GUESS = '/guess',
+  LOG = '/log',
 }
