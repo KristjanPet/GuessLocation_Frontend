@@ -1,8 +1,7 @@
 import UpdateLocationForm from 'components/location/UpdateLocationForm'
-import DashboardLayout from 'components/ui/DashboardLayout'
-import { FC, useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import mapboxgl, { Map } from 'mapbox-gl'
+
+import { FC } from 'react'
+
 import Layout from 'components/ui/Layout'
 
 const LocationEdit: FC = () => {

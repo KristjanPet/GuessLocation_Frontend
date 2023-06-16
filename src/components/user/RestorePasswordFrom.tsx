@@ -1,8 +1,6 @@
 // import { LoginUserFields, useLoginForm } from 'hooks/react-hook-form/useLogin'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import ToastContainer from 'react-bootstrap/ToastContainer'
-import Toast from 'react-bootstrap/Toast'
 import { Form } from 'react-bootstrap'
 import { Controller } from 'react-hook-form'
 import FormLabel from 'react-bootstrap/FormLabel'
@@ -10,24 +8,19 @@ import { routes } from 'constants/routesConstants'
 import Button from 'react-bootstrap/Button'
 import * as API from 'api/Api'
 import { StatusCode } from 'constants/errorConstants'
-import authStore from 'stores/auth.store'
 import { observer } from 'mobx-react'
 import { EmailUserFields, useEmailForm } from 'hooks/react-hook-form/useEmail'
 
 const RestorePasswordForm: FC = () => {
   const navigate = useNavigate()
   const { handleSubmit, errors, control } = useEmailForm()
-  const [apiError, setApiError] = useState('')
-  const [showError, setShowError] = useState(false)
 
   const onSubmit = handleSubmit(async (data: EmailUserFields) => {
     const response = await API.emailSend(data)
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
-      setApiError(response.data.message)
-      setShowError(true)
+      console.log(response.data.message)
     } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
-      setApiError(response.data.message)
-      setShowError(true)
+      console.log(response.data.message)
     } else {
       navigate(routes.LOGIN)
     }
@@ -98,12 +91,12 @@ const RestorePasswordForm: FC = () => {
         <div className=" laptop-hidden absolute right-0 top-0 h-full md:w-2/5 desktop:w-3/5">
           <img
             src="images/loginImage.png"
-            alt="login image"
+            alt="login"
             className=" object-cover h-full z-0 w-full"
           />
           <img
             src="images/loginLogo.svg"
-            alt="login image"
+            alt="login"
             className=" z-10 absolute right-1/3 top-1/3 m-auto w-auto"
           />
         </div>

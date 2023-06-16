@@ -1,12 +1,7 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import ToastContainer from 'react-bootstrap/ToastContainer'
-import Toast from 'react-bootstrap/Toast'
-import { Form } from 'react-bootstrap'
-import { Controller, useForm } from 'react-hook-form'
-import FormLabel from 'react-bootstrap/FormLabel'
+import { useForm } from 'react-hook-form'
 import { routes } from 'constants/routesConstants'
-import Button from 'react-bootstrap/Button'
 import * as API from 'api/Api'
 import { StatusCode } from 'constants/errorConstants'
 import { observer } from 'mobx-react'
@@ -28,7 +23,7 @@ const UpdateLocationForm: FC = () => {
   //GET
   const { data: location } = useQuery<{ data: LocationType }, Error>(
     ['location', locationId],
-    () => API.getLocationById(locationId!),
+    () => API.getLocationById(locationId || ''),
     {
       refetchOnWindowFocus: false, // Fetching is initially disabled
       keepPreviousData: true,
@@ -36,7 +31,7 @@ const UpdateLocationForm: FC = () => {
   )
 
   //UPDATE
-  const { handleSubmit, register } = useForm<UpdateLocationType>({
+  const { handleSubmit } = useForm<UpdateLocationType>({
     defaultValues: {
       avatar: '',
     },
@@ -49,10 +44,16 @@ const UpdateLocationForm: FC = () => {
       return
     }
 
+    if (!locationId) {
+      setApiError('Error')
+      setShowError(true)
+      return
+    }
+
     // navigate(routes.HOME)
     const formData = new FormData()
     formData.append('avatar', file, file.name)
-    const fileResponse = await API.updateLocation(formData, locationId!)
+    const fileResponse = await API.updateLocation(formData, locationId)
     if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
       setShowError(true)
       setApiError(fileResponse.data.message)
@@ -126,6 +127,11 @@ const UpdateLocationForm: FC = () => {
             className=" hidden"
           />
           {showError && <div className="text-danger">{apiError}</div>}
+          {fileError && (
+            <div className="d-block invalid-feedback text-danger mb-2 text-center">
+              Field avatar is required
+            </div>
+          )}
         </div>
 
         <div className="mb-4 flex">

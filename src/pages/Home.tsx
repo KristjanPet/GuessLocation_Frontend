@@ -1,12 +1,11 @@
 import Layout from 'components/ui/Layout'
 import { routes } from 'constants/routesConstants'
 import { GuessType } from 'models/guess'
-import { FC, useEffect, useState } from 'react'
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { FC, useState } from 'react'
+import { useInfiniteQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
-import GuessForm from 'components/guess/GuessForm'
 import GuessComponent from 'components/guess/GuessComponent'
 import { LocationType } from 'models/location'
 import LocationComponent from 'components/location/LocationComponent'
@@ -15,7 +14,7 @@ import useMediaQuery from 'hooks/useMediaQuery'
 const Home: FC = () => {
   const { isMobile } = useMediaQuery(769)
 
-  const [locationsTakeNumber, setLocationsTakeNumber] = useState(() => {
+  const [locationsTakeNumber] = useState(() => {
     // console.log(isMobile)
     if (isMobile) {
       return 3
@@ -24,24 +23,23 @@ const Home: FC = () => {
     }
   })
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<
-      { data: { data: GuessType[]; meta: { total: number; page: number } } },
-      Error
-    >(
-      'guesses',
-      ({ pageParam = 1 }) =>
-        API.getGeuessByUser(authStore.user?.id!, pageParam, 3),
-      {
-        getNextPageParam: (lastPage, allPages) => {
-          const currentPage = lastPage?.data.meta?.page || 1
-          const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-          // console.log(lastPage, lastPage?.data.meta?.page)
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+    { data: { data: GuessType[]; meta: { total: number; page: number } } },
+    Error
+  >(
+    'guesses',
+    ({ pageParam = 1 }) =>
+      API.getGeuessByUser(authStore.user?.id || '', pageParam, 3),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const currentPage = lastPage?.data.meta?.page || 1
+        const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
+        // console.log(lastPage, lastPage?.data.meta?.page)
 
-          return currentPage < totalPages ? currentPage + 1 : undefined
-        },
+        return currentPage < totalPages ? currentPage + 1 : undefined
       },
-    )
+    },
+  )
 
   const guesses = data?.pages.flatMap((page) => page.data.data) || []
 

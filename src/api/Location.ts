@@ -1,10 +1,6 @@
 import { apiRoutes } from 'constants/apiConstants'
 import { apiRequest } from './Api'
-import {
-  LocationType,
-  UpdateLocationType,
-  createLocationType,
-} from 'models/location'
+import { LocationType, createLocationType } from 'models/location'
 
 export const getLocation = async (page: number, take: number) =>
   apiRequest<undefined, LocationType[]>(

@@ -1,8 +1,6 @@
 // import { LoginUserFields, useLoginForm } from 'hooks/react-hook-form/useLogin'
 import { FC, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import ToastContainer from 'react-bootstrap/ToastContainer'
-import Toast from 'react-bootstrap/Toast'
 import { Form } from 'react-bootstrap'
 import { Controller } from 'react-hook-form'
 import FormLabel from 'react-bootstrap/FormLabel'
@@ -129,12 +127,12 @@ const LoginForm: FC = () => {
         <div className=" laptop-hidden absolute right-0 top-0 h-full md:w-2/5 desktop:w-3/5">
           <img
             src="images/loginImage.png"
-            alt="login image"
+            alt="login "
             className=" object-cover h-full z-0 w-full"
           />
           <img
             src="images/loginLogo.svg"
-            alt="login image"
+            alt="login "
             className=" z-10 absolute right-1/3 top-1/3 m-auto w-auto"
           />
         </div>

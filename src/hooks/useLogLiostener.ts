@@ -4,6 +4,7 @@ import * as API from 'api/Api'
 import authStore from 'stores/auth.store'
 
 export interface EventPayload {
+  id?: string
   component: string | null
   url: string
   action: string
@@ -30,7 +31,7 @@ const useLogListener = () => {
       if (authStore.user) {
         // This is where you'd make your API call to send the data to your backend.
         // This is just a placeholder console log.
-        console.log('Sending data to backend', payload)
+        // console.log('Sending data to backend', payload)
         API.createLog(payload)
       }
     }

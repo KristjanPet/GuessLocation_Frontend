@@ -1,10 +1,8 @@
 import Layout from 'components/ui/Layout'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import Avatar from 'react-avatar'
-import { useInfiniteQuery, useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { useInfiniteQuery } from 'react-query'
 import * as API from 'api/Api'
-import { UserType } from 'models/auth'
 import authStore from 'stores/auth.store'
 import { GuessType } from 'models/guess'
 import GuessComponent from 'components/guess/GuessComponent'
@@ -16,24 +14,23 @@ import LocationComponent from 'components/location/LocationComponent'
 // }
 
 const Profile: FC = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<
-      { data: { data: GuessType[]; meta: { total: number; page: number } } },
-      Error
-    >(
-      'guesses',
-      ({ pageParam = 1 }) =>
-        API.getGeuessByUser(authStore.user?.id!, pageParam, 3),
-      {
-        getNextPageParam: (lastPage, allPages) => {
-          const currentPage = lastPage?.data.meta?.page || 1
-          const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
-          // console.log(lastPage, lastPage?.data.meta?.page)
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+    { data: { data: GuessType[]; meta: { total: number; page: number } } },
+    Error
+  >(
+    'guesses',
+    ({ pageParam = 1 }) =>
+      API.getGeuessByUser(authStore.user?.id || '', pageParam, 3),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const currentPage = lastPage?.data.meta?.page || 1
+        const totalPages = Math.ceil((lastPage?.data.meta?.total || 0) / 3)
+        // console.log(lastPage, lastPage?.data.meta?.page)
 
-          return currentPage < totalPages ? currentPage + 1 : undefined
-        },
+        return currentPage < totalPages ? currentPage + 1 : undefined
       },
-    )
+    },
+  )
 
   const guesses = data?.pages.flatMap((page) => page.data.data) || []
 

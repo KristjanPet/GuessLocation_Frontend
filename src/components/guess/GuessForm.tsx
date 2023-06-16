@@ -9,7 +9,7 @@ interface Props {
 }
 
 const GuessForm: FC<Props> = ({ guess, place }) => {
-  const [placeColor, setPlaceColor] = useState(() => {
+  const placeColor = useState(() => {
     if (place === 0) {
       return 'gold'
     } else if (place === 1) {
@@ -38,7 +38,7 @@ const GuessForm: FC<Props> = ({ guess, place }) => {
 
   return (
     <>
-      {authStore.user!.id === guess.user.id ? (
+      {authStore.user && authStore.user.id === guess.user.id ? (
         <div className="flex items-center bg-primary text-white">
           <div
             className={`${placeColor} rounded-full w-7 h-7 text-white text-xs m-2 text-center pt-2`}

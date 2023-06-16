@@ -1,12 +1,11 @@
 import { UpdatePasswordFields, UpdateUserFields } from 'models/auth'
-import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import * as API from 'api/Api'
 import Popup from 'reactjs-popup'
 import { StatusCode } from 'constants/errorConstants'
 import authStore from 'stores/auth.store'
 import { Form, FormLabel } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import Avatar from 'react-avatar'
 
 const SettingsForm: FC = () => {
   const [apiError, setApiError] = useState('')
@@ -18,7 +17,7 @@ const SettingsForm: FC = () => {
 
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
-  const [fileError, setFileError] = useState(false)
+  const [fileError] = useState(false)
 
   const closeAll = () => {
     setWindowOpen(false)
@@ -42,18 +41,24 @@ const SettingsForm: FC = () => {
     if (file) {
       const formData = new FormData()
       formData.append('avatar', file, file.name)
-      const fileResponse = await API.uploadAvatar(formData, authStore.user?.id!)
-      if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
-        setApiError(fileResponse.data.message)
-        setShowError(true)
-      } else if (
-        fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
-      ) {
-        setApiError(fileResponse.data.message)
-        setShowError(true)
-      } else {
-        setAvatarOpen(false)
-        setConformOpen(true)
+      if (authStore.user) {
+        const fileResponse = await API.uploadAvatar(
+          formData,
+          authStore.user?.id,
+        )
+
+        if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
+          setApiError(fileResponse.data.message)
+          setShowError(true)
+        } else if (
+          fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
+        ) {
+          setApiError(fileResponse.data.message)
+          setShowError(true)
+        } else {
+          setAvatarOpen(false)
+          setConformOpen(true)
+        }
       }
     } else {
       const response = await API.updateUser(data)
@@ -135,11 +140,6 @@ const SettingsForm: FC = () => {
         setConformOpen(true)
       }
     }
-  }
-
-  const handleFileError = () => {
-    if (!file) setFileError(true)
-    else setFileError(false)
   }
 
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -231,6 +231,7 @@ const SettingsForm: FC = () => {
                 </Form.Group>
               </div>
             </div>
+            {showError && <div className="text-danger">{apiError}</div>}
 
             <div className="grid md:grid-cols-2 mb-4 gap-4 items-center">
               <div className="  ">
@@ -323,6 +324,7 @@ const SettingsForm: FC = () => {
                       ? 'images/hidePassword.svg'
                       : 'images/showPassword.svg'
                   }
+                  alt="show password"
                   onClick={() => setOVisible(!oVisible)}
                   width={20}
                 />
@@ -362,6 +364,7 @@ const SettingsForm: FC = () => {
                       ? 'images/hidePassword.svg'
                       : 'images/showPassword.svg'
                   }
+                  alt="show password"
                   onClick={() => setPVisible(!pVisible)}
                   width={20}
                 />
@@ -393,6 +396,7 @@ const SettingsForm: FC = () => {
                       ? 'images/hidePassword.svg'
                       : 'images/showPassword.svg'
                   }
+                  alt="show password"
                   onClick={() => setCVisible(!cVisible)}
                   width={20}
                 />

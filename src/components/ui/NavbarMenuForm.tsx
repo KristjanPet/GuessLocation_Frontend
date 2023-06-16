@@ -14,8 +14,6 @@ import LogForm from 'components/user/LogForm'
 
 const NavbarMenuForm: FC = () => {
   const navigate = useNavigate()
-  const [apiError, setApiError] = useState('')
-  const [showError, setShowError] = useState(false)
   const [windowOpen, setWindowOpen] = useState(false)
   const [animation, setAnimation] = useState(false)
 
@@ -34,11 +32,9 @@ const NavbarMenuForm: FC = () => {
   const signout = async () => {
     const response = await API.signout()
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
-      setApiError(response.data.message)
-      setShowError(true)
+      console.log(response.data.message)
     } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
-      setApiError(response.data.message)
-      setShowError(true)
+      console.log(response.data.message)
     } else {
       authStore.signout()
       navigate(routes.LOGIN)

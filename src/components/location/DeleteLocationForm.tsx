@@ -1,19 +1,15 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import * as API from 'api/Api'
 import { useForm } from 'react-hook-form'
 import { MdClose } from 'react-icons/md'
 import Popup from 'reactjs-popup'
 import { StatusCode } from 'constants/errorConstants'
-import { routes } from 'constants/routesConstants'
-import { useNavigate } from 'react-router-dom'
-import authStore from 'stores/auth.store'
 
 type props = {
   location_id: string
 }
 
 const DeleteLocationForm: FC<props> = ({ location_id }) => {
-  const navigate = useNavigate()
   const { handleSubmit } = useForm()
 
   const [windowOpen, setWindowOpen] = useState(false)

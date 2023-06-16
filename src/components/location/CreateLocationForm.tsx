@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import mapboxgl, { Map, MapMouseEvent, Marker } from 'mapbox-gl'
+import { useNavigate } from 'react-router-dom'
+import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import { observer } from 'mobx-react'
 import { MdClose } from 'react-icons/md'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -15,10 +15,7 @@ const CreateLocationForm: FC = () => {
 
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<Map | null>(null)
-  const [lng, setLng] = useState(-70.9)
-  const [lat, setLat] = useState(42.35)
-  const [zoom, setZoom] = useState(9)
-  const [marker, setMarker] = useState<Marker>(
+  const [marker] = useState<Marker>(
     new mapboxgl.Marker({
       color: '#000000',
     }),
@@ -28,14 +25,13 @@ const CreateLocationForm: FC = () => {
 
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
-  const [fileError, setFileError] = useState(false)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)
 
   //CREATE
-  const { handleSubmit, register } = useForm<createLocationType>({
+  const { handleSubmit } = useForm<createLocationType>({
     defaultValues: {
       lon: 0,
       lat: 0,
@@ -84,8 +80,8 @@ const CreateLocationForm: FC = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current || '',
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [lng, lat],
-      zoom: zoom,
+      center: [-70.9, 42.35],
+      zoom: 9,
     })
   })
   // const location = useLocation()
@@ -100,7 +96,7 @@ const CreateLocationForm: FC = () => {
       marker.setLngLat([0, 0])
       marker.addTo(map.current)
     }
-  }, [])
+  })
 
   //IMAGE
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -115,7 +111,6 @@ const CreateLocationForm: FC = () => {
       const reader = new FileReader()
       reader.onloadend = () => {
         setPreview(reader.result as string)
-        setFileError(false)
       }
       reader.readAsDataURL(file)
     } else {

@@ -1,24 +1,17 @@
-import { UpdatePasswordFields, UpdateUserFields } from 'models/auth'
-import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import * as API from 'api/Api'
 import Popup from 'reactjs-popup'
 import { StatusCode } from 'constants/errorConstants'
-import authStore from 'stores/auth.store'
-import { Form, FormLabel } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import Avatar from 'react-avatar'
+import { EventPayload } from 'hooks/useLogLiostener'
 
 const SettingsForm: FC = () => {
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)
   const [windowOpen, setWindowOpen] = useState(false)
-  const [ConformOpen, setConformOpen] = useState(false)
-  const [PasswordOpen, setPasswordOpen] = useState(false)
-  const [AvatarOpen, setAvatarOpen] = useState(false)
 
-  const [file, setFile] = useState<File | null>(null)
-  const [preview, setPreview] = useState<string | null>(null)
-  const [fileError, setFileError] = useState(false)
+  const [logData, setLogData] = useState<EventPayload[]>()
 
   //USER INFO CHANGE
   const { handleSubmit, register } = useForm<{ userId: string }>({
@@ -28,7 +21,23 @@ const SettingsForm: FC = () => {
   })
 
   const onSubmit = async (data: { userId: string }) => {
-    // console.log(data)
+    const response = await API.getLog(data.userId)
+    if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
+      setApiError(response.data.message)
+      setShowError(true)
+    } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
+      setApiError(response.data.message)
+      setShowError(true)
+    } else {
+      setLogData(response.data.data)
+      console.log(response.data.data)
+    }
+  }
+
+  const onClose = () => {
+    setWindowOpen(false)
+    setShowError(false)
+    setLogData(undefined)
   }
 
   return (
@@ -39,7 +48,7 @@ const SettingsForm: FC = () => {
       <Popup modal nested className="relative" open={windowOpen}>
         <div
           className=" fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full z-10"
-          onClick={() => setWindowOpen(false)}
+          onClick={() => onClose()}
         />
 
         <div className="flex flex-col p-4 items-start absolute top-1/2 left-1/2 w-72 md:w-[80rem] -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl z-20">
@@ -62,7 +71,9 @@ const SettingsForm: FC = () => {
                     {...register('userId')}
                   />
                 </Form.Group>
+                {showError && <div className="text-danger">{apiError}</div>}
               </div>
+
               <div className=" ">
                 <button
                   className=" bg-primary py-2 px-7 text-white rounded"
@@ -73,7 +84,17 @@ const SettingsForm: FC = () => {
               </div>
             </div>
           </form>
-          <div className="border border-slate-700 w-full h-full p-5"></div>
+          <div className="border border-slate-700 w-full h-full max-h-96 overflow-y-auto p-5">
+            {logData && logData.length > 0 ? (
+              <div>
+                {logData.map((log: EventPayload) => (
+                  <div key={log.id}>{JSON.stringify(log)}</div>
+                ))}
+              </div>
+            ) : (
+              <p>No logs yet</p>
+            )}
+          </div>
         </div>
       </Popup>
     </>

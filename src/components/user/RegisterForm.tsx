@@ -1,7 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import ToastContainer from 'react-bootstrap/ToastContainer'
-import Toast from 'react-bootstrap/Toast'
 import { Form } from 'react-bootstrap'
 import { Controller } from 'react-hook-form'
 import FormLabel from 'react-bootstrap/FormLabel'
@@ -10,7 +8,6 @@ import Button from 'react-bootstrap/Button'
 import * as API from 'api/Api'
 import { StatusCode } from 'constants/errorConstants'
 import authStore from 'stores/auth.store'
-import Avatar from 'react-avatar'
 import { observer } from 'mobx-react'
 import {
   RegisterUserFields,
@@ -21,7 +18,6 @@ const LoginForm: FC = () => {
   const navigate = useNavigate()
   const { handleSubmit, errors, control } = useRegisterForm()
   const [apiError, setApiError] = useState('')
-  const [showError, setShowError] = useState(false)
 
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
@@ -36,10 +32,8 @@ const LoginForm: FC = () => {
     const response = await API.register(data)
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
       setApiError(response.data.message)
-      setShowError(true)
     } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
       setApiError(response.data.message)
-      setShowError(true)
     } else {
       // Login user before uploading an avatar image
       const loginResponse = await API.login({
@@ -50,12 +44,10 @@ const LoginForm: FC = () => {
 
       if (loginResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
         setApiError(loginResponse.data.message)
-        setShowError(true)
       } else if (
         loginResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
       ) {
         setApiError(loginResponse.data.message)
-        setShowError(true)
       } else {
         authStore.login(loginResponse.data)
         // Upload avatar
@@ -67,12 +59,10 @@ const LoginForm: FC = () => {
         )
         if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
           setApiError(fileResponse.data.message)
-          setShowError(true)
         } else if (
           fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
         ) {
           setApiError(fileResponse.data.message)
-          setShowError(true)
         } else {
           // Get user with avatar image
           const userResponse = await API.fetchUser()
@@ -80,7 +70,6 @@ const LoginForm: FC = () => {
             userResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
           ) {
             setApiError(fileResponse.data.message)
-            setShowError(true)
           } else {
             authStore.login(userResponse.data)
             navigate(routes.HOME)
@@ -283,6 +272,7 @@ const LoginForm: FC = () => {
                           ? 'images/hidePassword.svg'
                           : 'images/showPassword.svg'
                       }
+                      alt="show pass"
                       onClick={() => setPVisible(!pVisible)}
                       width={20}
                     />
@@ -324,6 +314,7 @@ const LoginForm: FC = () => {
                           ? 'images/hidePassword.svg'
                           : 'images/showPassword.svg'
                       }
+                      alt="show pass"
                       onClick={() => setCVisible(!cVisible)}
                       width={20}
                     />
@@ -356,12 +347,12 @@ const LoginForm: FC = () => {
         <div className=" laptop-hidden absolute right-0 top-0 h-full md:w-2/5 desktop:w-3/5">
           <img
             src="images/loginImage.png"
-            alt="login image"
+            alt="login "
             className=" object-cover h-full z-0 w-full"
           />
           <img
             src="images/loginLogo.svg"
-            alt="login image"
+            alt="login "
             className=" z-10 absolute right-1/3 top-1/3 m-auto w-auto"
           />
         </div>

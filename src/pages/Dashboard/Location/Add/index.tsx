@@ -1,5 +1,4 @@
 import CreateLocationForm from 'components/location/CreateLocationForm'
-import DashboardLayout from 'components/ui/DashboardLayout'
 import Layout from 'components/ui/Layout'
 import { FC } from 'react'
 

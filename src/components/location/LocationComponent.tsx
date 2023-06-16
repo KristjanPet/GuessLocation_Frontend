@@ -1,7 +1,6 @@
 import { routes } from 'constants/routesConstants'
 import { LocationType } from 'models/location'
-import React, { FC } from 'react'
-import { MdClose } from 'react-icons/md'
+import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { RiPencilFill } from 'react-icons/ri'
 import DeleteLocationForm from './DeleteLocationForm'

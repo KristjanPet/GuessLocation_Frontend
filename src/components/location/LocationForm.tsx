@@ -1,28 +1,26 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import * as API from 'api/Api'
 import { LocationType } from 'models/location'
-import { routes } from 'constants/routesConstants'
 import { useForm } from 'react-hook-form'
 import { StatusCode } from 'constants/errorConstants'
-import mapboxgl, { Map, MapMouseEvent, Marker } from 'mapbox-gl'
+import mapboxgl, { Map, Marker } from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { GuessType, createGuessType } from 'models/guess'
 import GuessForm from 'components/guess/GuessForm'
 
 const LocationForm: FC = () => {
-  const navigate = useNavigate()
   const { locationId } = useParams()
 
   const [distance, setDistance] = useState<number | null>(null)
 
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<Map | null>(null)
-  const [lng, setLng] = useState(-70.9)
-  const [lat, setLat] = useState(42.35)
-  const [zoom, setZoom] = useState(9)
-  const [marker, setMarker] = useState<Marker>(
+  const [lng] = useState(-70.9)
+  const [lat] = useState(42.35)
+  const [zoom] = useState(9)
+  const [marker] = useState<Marker>(
     new mapboxgl.Marker({
       color: '#000000',
     }),
@@ -30,13 +28,10 @@ const LocationForm: FC = () => {
   const [markerLat, setMarkerLat] = useState(0)
   const [markerLon, setMarkerLon] = useState(0)
 
-  const [apiError, setApiError] = useState('')
-  const [showError, setShowError] = useState(false)
-
   //GET
   const { data: location } = useQuery<{ data: LocationType }, Error>(
     ['location', locationId],
-    () => API.getLocationById(locationId!),
+    () => API.getLocationById(locationId || ''),
     {
       refetchOnWindowFocus: false, // Fetching is initially disabled
       keepPreviousData: true,
@@ -46,13 +41,13 @@ const LocationForm: FC = () => {
   const { data: guesses, refetch: refetchGuesses } = useQuery<
     { data: { data: GuessType[] } },
     Error
-  >(['guesses', locationId], () => API.getGeuess(locationId!), {
+  >(['guesses', locationId], () => API.getGeuess(locationId || ''), {
     refetchOnWindowFocus: false, // Fetching is initially disabled
     keepPreviousData: true,
   })
 
   //GUESS
-  const { handleSubmit, register } = useForm<createGuessType>({
+  const { handleSubmit } = useForm<createGuessType>({
     defaultValues: {
       lon: 0,
       lat: 0,
@@ -60,16 +55,17 @@ const LocationForm: FC = () => {
   })
 
   const onSubmit = async () => {
+    if (!locationId) {
+      return
+    }
     const data: createGuessType = { lon: markerLon, lat: markerLat }
-    const fileResponse = await API.createGuess(data, locationId!)
+    const fileResponse = await API.createGuess(data, locationId)
     if (fileResponse.data?.statusCode === StatusCode.BAD_REQUEST) {
-      setShowError(true)
-      setApiError(fileResponse.data.message)
+      console.log(fileResponse.data.message)
     } else if (
       fileResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
     ) {
-      setShowError(true)
-      setApiError(fileResponse.data.message)
+      console.log(fileResponse.data.message)
     } else {
       // console.log(fileResponse.data)
       setDistance(fileResponse.data.distance)
@@ -100,7 +96,7 @@ const LocationForm: FC = () => {
       marker.setLngLat([0, 0])
       marker.addTo(map.current)
     }
-  }, [])
+  })
 
   const formatDistance = (distance: number | null) => {
     if (distance === null) {

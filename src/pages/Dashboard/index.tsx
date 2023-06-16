@@ -1,7 +1,5 @@
 import DashboardLayout from 'components/ui/DashboardLayout'
-import { FC, useEffect } from 'react'
-import * as C3 from 'c3'
-import * as API from 'api/Api'
+import { FC } from 'react'
 
 const Dashboard: FC = () => {
   return <DashboardLayout>Dashboard</DashboardLayout>

@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react'
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { FC, useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { routes } from 'constants/routesConstants'
 import authStore from 'stores/auth.store'
 import { StatusCode } from 'constants/errorConstants'
